@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Último Jardinero — Restaura planetas muertos. Devuelve la vida a la galaxia. Un city-builder ecológico y positivo.">
+<title>ÚLTIMO JARDINERO — Restaura Planetas Muertos</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/outfit@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/outfit@latest/700.css">
+<style>
+:root{
+  --bg:#06060f;
+  --text:#eaf2ff;
+  --muted:#9aa7c7;
+  --green:#5ef08e;
+  --green-deep:#22c55e;
+  --blue:#4cc9f0;
+  --purple:#a78bfa;
+  --orange:#fb923c;
+  --red:#ef4444;
+  --line:rgba(255,255,255,.12);
+  --panel:rgba(255,255,255,.05);
+  --hexa:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  --font-display:'Space Grotesk','Outfit',sans-serif;
+  --font-body:'Outfit',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(1000px 600px at 85% -10%, rgba(76,201,240,.08), transparent 60%),
+    radial-gradient(900px 700px at -10% 40%, rgba(94,240,142,.07), transparent 60%),
+    radial-gradient(800px 600px at 70% 90%, rgba(167,139,250,.07), transparent 60%);
+}
+#starfield{position:fixed;inset:0;z-index:-1;pointer-events:none}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--font-display)}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;transition:background .35s, box-shadow .35s, padding .35s;
+}
+.nav.scrolled{background:rgba(6,6,15,.75);backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(0,0,0,.45);padding:10px 28px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;letter-spacing:.08em;font-size:15px}
+.brand b{color:var(--green)}
+.brand-hex{width:34px;height:38px;clip-path:var(--hexa);background:linear-gradient(160deg,var(--green),var(--blue));display:grid;place-items:center;font-size:16px}
+.links{display:flex;gap:26px;font-size:14px;letter-spacing:.06em}
+.links a{color:var(--muted);position:relative;transition:color .25s}
+.links a:hover{color:var(--text)}
+.links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .3s}
+.links a:hover::after{width:100%}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;cursor:pointer;border:none;font-family:var(--font-display);transition:transform .25s, box-shadow .25s, filter .25s}
+.btn-small{padding:10px 20px;font-size:13px;letter-spacing:.08em;background:rgba(94,240,142,.14);color:var(--green);border:1px solid rgba(94,240,142,.45)}
+.btn-small:hover{background:rgba(94,240,142,.25);transform:translateY(-2px)}
+
+/* ---------- HERO ---------- */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;background:url('img/portada.jpeg') center 68%/cover no-repeat;animation:kenburns 22s ease-in-out infinite alternate;filter:saturate(1.08)}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-14px)}}
+.hero-vignette{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 42%, rgba(6,6,15,.15) 0%, rgba(6,6,15,.62) 55%, rgba(6,6,15,.94) 100%),
+  linear-gradient(180deg, rgba(6,6,15,.72) 0%, rgba(6,6,15,.15) 30%, rgba(6,6,15,.2) 62%, var(--bg) 100%)}
+.hero-content{position:relative;z-index:2;padding:120px 22px 80px;max-width:960px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(10px);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--green)}
+.hero-content h1{
+  margin:26px 0 14px;font-size:clamp(44px,9vw,104px);font-weight:700;letter-spacing:.04em;line-height:1.02;
+  background:linear-gradient(95deg,var(--green) 5%,var(--blue) 50%,var(--purple) 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(94,240,142,.35));
+}
+.hero-sub{font-size:clamp(16px,2.4vw,22px);color:#d7e3ff;letter-spacing:.06em;margin-bottom:36px}
+.btn-primary{
+  padding:18px 36px;font-size:15px;font-weight:700;letter-spacing:.1em;color:#041018;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  box-shadow:0 12px 45px rgba(94,240,142,.4), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn-primary small{font-weight:700;opacity:.75;letter-spacing:.06em}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 60px rgba(94,240,142,.55)}
+.platforms{display:flex;justify-content:center;gap:14px;margin-top:26px;flex-wrap:wrap}
+.plat{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line);backdrop-filter:blur(8px);font-size:13px;color:#cdd9f6;transition:transform .25s,border-color .25s}
+.plat:hover{transform:translateY(-3px);border-color:rgba(94,240,142,.5)}
+.plat svg{width:17px;height:17px}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);animation:bounce 2s infinite;font-size:20px}
+@keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+.fhex{position:absolute;clip-path:var(--hexa);background:linear-gradient(160deg,rgba(94,240,142,.25),rgba(76,201,240,.12));z-index:1;animation:floaty 9s ease-in-out infinite}
+.fhex.h1{width:90px;height:100px;left:8%;top:24%;animation-delay:0s}
+.fhex.h2{width:56px;height:62px;right:10%;top:30%;animation-delay:2s;background:linear-gradient(160deg,rgba(167,139,250,.3),rgba(76,201,240,.12))}
+.fhex.h3{width:70px;height:78px;right:16%;bottom:20%;animation-delay:4s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-26px) rotate(8deg)}}
+
+/* ---------- SECCIONES ---------- */
+.section{max-width:1180px;margin:0 auto;padding:110px 24px}
+.kicker{display:inline-block;color:var(--green);letter-spacing:.4em;text-transform:uppercase;font-size:12px;margin-bottom:14px}
+.section h2{font-size:clamp(28px,4.6vw,46px);letter-spacing:.03em;margin-bottom:18px}
+.lead{color:var(--muted);font-size:clamp(15px,1.8vw,18px);max-width:760px;line-height:1.7}
+.center{text-align:center}
+.center .lead{margin:0 auto}
+
+/* ---------- CONCEPTO ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:1px solid var(--line);border-radius:24px;padding:32px 28px;
+  backdrop-filter:blur(12px);box-shadow:0 20px 60px rgba(0,0,0,.35);
+  transition:transform .35s, border-color .35s, box-shadow .35s;position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:-40%;left:-20%;width:60%;height:60%;background:radial-gradient(circle,rgba(94,240,142,.14),transparent 70%);opacity:0;transition:opacity .4s}
+.card:hover{transform:translateY(-8px);border-color:rgba(94,240,142,.4);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 40px rgba(94,240,142,.12)}
+.card:hover::before{opacity:1}
+.card-icon{width:56px;height:56px;border-radius:16px;background:rgba(94,240,142,.12);border:1px solid rgba(94,240,142,.35);display:grid;place-items:center;margin-bottom:20px;color:var(--green)}
+.card-icon svg{width:28px;height:28px}
+.card h3{font-size:17px;letter-spacing:.1em;margin-bottom:12px;color:var(--text)}
+.card p{color:var(--muted);font-size:14.5px;line-height:1.65}
+
+/* ---------- PASOS ---------- */
+.steps{display:flex;justify-content:center;align-items:flex-start;gap:14px;margin-top:56px;position:relative;flex-wrap:wrap}
+.steps::before{content:'';position:absolute;top:64px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,rgba(94,240,142,.4),rgba(76,201,240,.4),transparent);z-index:0}
+.step{background:none;border:none;color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;width:170px;z-index:1;font-family:var(--font-body)}
+.hexwrap{position:relative;width:118px;height:130px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.5));transition:filter .35s, transform .35s}
+.hexwrap::before{content:'';position:absolute;inset:0;clip-path:var(--hexa);background:rgba(255,255,255,.22);transition:background .35s}
+.hexwrap::after{content:'';position:absolute;inset:2px;clip-path:var(--hexa);background:linear-gradient(165deg,#12203a,#0a1222 60%,#0e2430)}
+.hex-ico{position:relative;z-index:2;width:100%;height:100%;display:grid;place-items:center;color:var(--blue);transition:color .3s}
+.hex-ico svg{width:42px;height:42px}
+.step-num{position:absolute;z-index:2;top:10px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;color:var(--muted)}
+.step.active .hexwrap{filter:drop-shadow(0 0 22px rgba(94,240,142,.55));transform:translateY(-6px)}
+.step.active .hexwrap::before{background:var(--green)}
+.step.active .hex-ico{color:var(--green)}
+.step-name{font-family:var(--font-display);font-weight:700;letter-spacing:.16em;font-size:14px}
+.step-desc{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:160px}
+.step-detail{
+  margin:44px auto 0;max-width:720px;text-align:center;padding:18px 26px;border-radius:16px;
+  background:rgba(94,240,142,.08);border:1px solid rgba(94,240,142,.3);color:#c9f5da;font-size:15px;letter-spacing:.03em;
+  backdrop-filter:blur(8px);transition:opacity .3s;
+}
+
+/* ---------- PLANETAS ---------- */
+.planet-wrap{display:grid;grid-template-columns:1.5fr 1fr;gap:26px;margin-top:52px;align-items:stretch}
+.planet-preview{position:relative;border-radius:26px;overflow:hidden;border:1px solid var(--line);min-height:420px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease;transform:scale(1.03)}
+.pimg.active{opacity:1}
+.ptag{position:absolute;top:18px;left:18px;padding:8px 16px;border-radius:10px;font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.22em;backdrop-filter:blur(8px);border:1px solid}
+.tag-red{color:#ffb4b4;background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.6)}
+.tag-orange{color:#ffd8b0;background:rgba(251,146,60,.18);border-color:rgba(251,146,60,.6)}
+.tag-green{color:#c9f5da;background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.65)}
+.pstats{position:absolute;top:18px;right:18px;display:flex;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:12px;background:rgba(6,10,20,.65);border:1px solid var(--line);backdrop-filter:blur(8px);font-family:var(--font-display);font-weight:700;font-size:14px}
+.chip svg{width:15px;height:15px}
+.chip.temp{color:#8fd8ff}.chip.atm{color:#9ff0c0}
+.pname{position:absolute;bottom:18px;left:18px;font-family:var(--font-display);font-weight:700;font-size:clamp(18px,2.4vw,26px);letter-spacing:.12em;text-shadow:0 4px 20px rgba(0,0,0,.8)}
+.planet-tabs{display:flex;flex-direction:column;gap:14px}
+.ptab-row{display:flex;gap:10px;flex-wrap:wrap}
+.ptab{padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-family:var(--font-display);font-weight:700;letter-spacing:.1em;font-size:13px;transition:all .3s;backdrop-filter:blur(8px)}
+.ptab:hover{color:var(--text);transform:translateY(-2px)}
+.ptab.active{color:var(--green);border-color:rgba(94,240,142,.55);background:rgba(94,240,142,.1);box-shadow:0 0 24px rgba(94,240,142,.18)}
+#pDesc{color:var(--muted);line-height:1.7;font-size:15px;padding:20px 22px;border-radius:18px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(10px);flex:1}
+.fauna-row{display:flex;gap:10px;flex-wrap:wrap}
+.fauna{padding:8px 14px;border-radius:999px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.35);font-size:12.5px;color:#ded1ff;letter-spacing:.05em}
+.starmap-box{margin-top:44px;border-radius:24px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);padding:28px 26px 12px}
+.starmap-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+.starmap-head h3{letter-spacing:.3em;font-size:14px;color:var(--blue)}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);letter-spacing:.08em}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:11px;clip-path:var(--hexa);display:inline-block}
+.dot.done{background:var(--green-deep)}.dot.cur{background:var(--blue)}.dot.lock{background:#2a3350}
+#starmapSvg{width:100%;height:auto;display:block}
+#starmapSvg text{font-family:var(--font-display);letter-spacing:.18em;font-size:11px;fill:var(--muted)}
+#starmapSvg .pulse{animation:nodepulse 1.6s ease-in-out infinite}
+@keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- SISTEMAS ---------- */
+.panels{display:grid;grid-template-columns:1.15fr 1fr;gap:26px;margin-top:52px}
+.panel{border-radius:26px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(12px);padding:30px;box-shadow:0 24px 70px rgba(0,0,0,.4);transition:border-color .4s, box-shadow .4s}
+.panel h3{letter-spacing:.22em;font-size:15px;color:var(--blue);margin-bottom:22px}
+.panel.green{border-color:rgba(34,197,94,.65);box-shadow:0 0 50px rgba(34,197,94,.22),0 24px 70px rgba(0,0,0,.4)}
+.eco-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:start}
+.machine{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0b1322}
+.machine img{width:100%;height:230px;object-fit:cover;object-position:center 60%}
+.machine figcaption{padding:12px;text-align:center;font-family:var(--font-display);font-weight:700;letter-spacing:.2em;font-size:11.5px;color:var(--orange)}
+.mach-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.mchip{padding:7px 13px;border-radius:10px;font-size:12px;letter-spacing:.06em;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.04)}
+.mchip.on{color:var(--orange);border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.12)}
+.gauge{margin-bottom:20px}
+.gauge label{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.gauge label b{color:var(--text);letter-spacing:.06em;font-size:14px}
+.slider{position:relative;height:26px}
+.bar{position:absolute;left:0;right:0;top:50%;height:10px;transform:translateY(-50%);background:rgba(255,255,255,.1);border-radius:999px}
+.zone{position:absolute;left:40%;width:20%;top:-3px;bottom:-3px;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:999px;box-shadow:0 0 14px rgba(74,222,128,.55)}
+.marker{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 0 14px rgba(255,255,255,.7);left:20%;transition:left .1s linear}
+.slider input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;margin:0}
+.green-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;background:rgba(34,197,94,.16);border:1px solid rgba(34,197,94,.6);color:#a7f3c9;font-family:var(--font-display);font-weight:700;letter-spacing:.2em;font-size:12.5px;opacity:.25;transform:scale(.96);transition:all .35s}
+.green-badge.show{opacity:1;transform:scale(1);box-shadow:0 0 30px rgba(34,197,94,.35)}
+.pov{border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
+.pov img{width:100%;height:330px;object-fit:cover;transition:transform 6s ease}
+.panel:hover .pov img{transform:scale(1.08)}
+.pov figcaption{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;background:linear-gradient(transparent,rgba(4,8,16,.9));font-size:14px;color:#d9e6ff;letter-spacing:.03em}
+.pov-note{margin-top:16px;color:var(--muted);font-size:14px;letter-spacing:.08em}
+.pov-note b{color:var(--purple)}
+
+/* ---------- DESCARGAR ---------- */
+#descargar{position:relative;overflow:hidden}
+.stores{display:flex;justify-content:center;gap:18px;margin-top:44px;flex-wrap:wrap}
+.store{display:flex;align-items:center;gap:14px;padding:16px 26px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--line);backdrop-filter:blur(10px);transition:all .3s;min-width:220px}
+.store:hover{transform:translateY(-5px);border-color:rgba(94,240,142,.55);box-shadow:0 16px 50px rgba(94,240,142,.18)}
+.store svg{width:30px;height:30px;color:var(--green)}
+.store small{display:block;color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.store b{font-family:var(--font-display);font-size:16px;letter-spacing:.08em}
+.float-fauna{position:absolute;font-size:30px;filter:drop-shadow(0 0 14px rgba(94,240,142,.7));animation:floaty 8s ease-in-out infinite;opacity:.85;pointer-events:none}
+.ff1{left:8%;top:22%}.ff2{right:9%;top:30%;animation-delay:1.5s}.ff3{left:14%;bottom:20%;animation-delay:3s}.ff4{right:15%;bottom:24%;animation-delay:4.5s}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14,.7);backdrop-filter:blur(10px)}
+.foot{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+.foot-left{display:flex;align-items:center;gap:14px}
+.foot-left p{color:var(--muted);font-size:12.5px;letter-spacing:.1em}
+.socials{display:flex;gap:12px}
+.socials a{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);transition:all .3s;background:rgba(255,255,255,.04)}
+.socials a:hover{color:var(--green);border-color:rgba(94,240,142,.5);transform:translateY(-3px)}
+.socials svg{width:18px;height:18px}
+.atp-wrap{display:flex;align-items:center;gap:12px}
+.atp{width:46px;height:46px;border:2px solid var(--green);border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;color:var(--green);letter-spacing:.05em;box-shadow:0 0 20px rgba(94,240,142,.25)}
+.atp-wrap small{color:var(--muted);font-size:11px;letter-spacing:.14em;max-width:130px;line-height:1.5}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:960px){
+  .links{display:none}
+  .cards{grid-template-columns:1fr}
+  .planet-wrap,.panels,.eco-grid{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .planet-preview{min-height:320px}
+  .machine img{height:280px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#hero"><span class="brand-hex">🌱</span>ÚLTIMO&nbsp;<b>JARDINERO</b></a>
+  <nav class="links">
+    <a href="#concepto">Concepto</a>
+    <a href="#como-jugar">Cómo jugar</a>
+    <a href="#planetas">Planetas</a>
+    <a href="#sistemas">Sistemas</a>
+  </nav>
+  <a href="#descargar" class="btn btn-small">DESCARGAR</a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <span class="fhex h1"></span><span class="fhex h2"></span><span class="fhex h3"></span>
+  <div class="hero-content">
+    <span class="hero-badge">🤖 Una fantasía ecológica positiva</span>
+    <h1>ÚLTIMO JARDINERO</h1>
+    <p class="hero-sub">Restaura planetas y devuelve la vida a la galaxia.</p>
+    <a class="btn btn-primary" href="#descargar">DESCARGAR AHORA <small>(PC / CELULAR)</small></a>
+    <div class="platforms">
+      <span class="plat"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><circle cx="14.8" cy="9.2" r="2.5" fill="currentColor"/><circle cx="8.6" cy="15.2" r="1.6" fill="currentColor"/><path d="M10 14l2.6-2.7" stroke="currentColor" stroke-width="1.8"/></svg>Steam</span>
+      <span class="plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 12.9c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.2-.9-2.3-3.2zM14.7 6.6c.6-.7 1-1.7.8-2.6-.9 0-1.9.6-2.4 1.3-.6.7-1 1.6-.9 2.5 1 .1 2-.5 2.5-1.2z"/></svg>App Store</span>
+      <span class="plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17c0 .8.9 1.3 1.6.9l14-8.5c.7-.4.7-1.4 0-1.8l-14-8.5c-.7-.4-1.6.1-1.6.9z"/></svg>Google Play</span>
+    </div>
+  </div>
+  <div class="scroll-hint">▼</div>
+</section>
+
+<!-- ============ CONCEPTO ============ -->
+<section id="concepto" class="section">
+  <span class="kicker reveal">El concepto</span>
+  <h2 class="reveal">UNA FANTASÍA ECOLÓGICA POSITIVA</h2>
+  <p class="lead reveal">Eres <b style="color:var(--green)">UJ</b>, un robot autónomo programado para terraformar planetas inhóspitos. Restaura el equilibrio ecológico, cultiva la vida y prepara el hogar perfecto para los humanos.</p>
+  <div class="cards">
+    <article class="card reveal">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20h16"/><path d="M6 20v-6l4-2v8"/><path d="M14 20V9l4-2v13"/><path d="M12 3c-2 1.5-2 3.5 0 5 2-1.5 2-3.5 0-5z" fill="currentColor" stroke="none"/></svg></div>
+      <h3>CITY BUILDER INVERTIDO</h3>
+      <p>Transforma el caos en orden: construye, terraforma y, cuando el jardín florece… retírate. La naturaleza toma el mando.</p>
+    </article>
+    <article class="card reveal">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16v10H10l-4 4v-4H4z"/><path d="M12 13.2s-2.6-1.7-2.6-3.3c0-.9.7-1.5 1.4-1.5.5 0 .9.2 1.2.7.3-.5.7-.7 1.2-.7.7 0 1.4.6 1.4 1.5 0 1.6-2.6 3.3-2.6 3.3z" fill="currentColor" stroke="none"/></svg></div>
+      <h3>MINIMALISMO NARRATIVO</h3>
+      <p>Descubre la historia a través de la transformación y la soledad. Sin diálogos: solo tú, el viento y los mundos que despiertan.</p>
+    </article>
+    <article class="card reveal">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M19 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M12 20c-2.5-1-4-3-4-5 2.5 0 4 2 4 5z" fill="currentColor" stroke="none"/></svg></div>
+      <h3>RESTAURA LA VIDA</h3>
+      <p>Un sistema que recompensa la creación, no la supervivencia. Equilibra temperatura y atmósfera y desata la vida.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ CÓMO JUGAR ============ -->
+<section id="como-jugar" class="section center">
+  <span class="kicker reveal">Cómo jugar</span>
+  <h2 class="reveal">EL CICLO DE VIDA PLANETARIO</h2>
+  <div class="steps reveal" id="steps">
+    <button class="step active" data-i="0">
+      <span class="hexwrap"><span class="step-num">01</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/><path d="M8 10.5h5M10.5 8v5"/></svg></span></span>
+      <span class="step-name">ANALIZAR</span>
+      <span class="step-desc">Escanea el terreno y lee Temperatura y Atmósfera.</span>
+    </button>
+    <button class="step" data-i="1">
+      <span class="hexwrap"><span class="step-num">02</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5l7 4v7l-7 4-7-4v-7z"/><path d="M12 9v6M9 12h6"/></svg></span></span>
+      <span class="step-name">RECOLECTAR</span>
+      <span class="step-desc">Recolecta recursos necesarios para terraformar el planeta.</span>
+    </button>
+    <button class="step" data-i="2">
+      <span class="hexwrap"><span class="step-num">03</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 4v16M12 4v16M18 4v16"/><circle cx="6" cy="14" r="2.2" fill="currentColor" stroke="none"/><circle cx="12" cy="8" r="2.2" fill="currentColor" stroke="none"/><circle cx="18" cy="15" r="2.2" fill="currentColor" stroke="none"/></svg></span></span>
+      <span class="step-name">AJUSTAR</span>
+      <span class="step-desc">Equilibra las condiciones del planeta.</span>
+    </button>
+    <button class="step" data-i="3">
+      <span class="hexwrap"><span class="step-num">04</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21v-8"/><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M12 13c0-4-3-6-7-6 0 4 3 6 7 6z"/></svg></span></span>
+      <span class="step-name">SEMBRAR Y CONTEMPLAR</span>
+      <span class="step-desc">Siembra la flora necesaria para mantener el equilibrio ecológico. contempla la vida floreciendo.</span>
+    </button>
+    <button class="step" data-i="4">
+      <span class="hexwrap"><span class="step-num">05</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2c4 3 5 8 3 13h-6C7 10 8 5 12 2z"/><circle cx="12" cy="9" r="2"/><path d="M9 15l-2 5 4-2 4 2-2-5"/></svg></span></span>
+      <span class="step-name">EXPANDIR</span>
+      <span class="step-desc">Desbloquea el siguiente planeta del Mapa Estelar.</span>
+    </button>
+  </div>
+  <div class="step-detail reveal" id="stepDetail">Lee los indicadores del planeta: cada mundo comienza en un extremo hostil. Tu misión: llevarlo al equilibrio.</div>
+</section>
+
+<!-- ============ PLANETAS ============ -->
+<section id="planetas" class="section">
+  <span class="kicker reveal">Progresión</span>
+  <h2 class="reveal">TU VIAJE DE TRANSFORMACIÓN</h2>
+  <p class="lead reveal">Del páramo al jardín: regula el clima, siembra flora chica, mediana y grande, y estabiliza la ecología completa.</p>
+
+  <div class="planet-wrap">
+    <div class="planet-preview reveal">
+      <img class="pimg active" data-state="frio" src='img/frio.png' alt="Planeta frío">
+      <img class="pimg" data-state="caliente" src='img/caliente.png' alt="Planeta caliente">
+      <img class="pimg" data-state="estable" src='img/planeta restaurado.png' alt="Planeta estable">
+      <div class="ptag tag-red" id="pTag">CONTAMINACIÓN</div>
+      <div class="pstats">
+        <span class="chip temp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4a2 2 0 0 1 4 0v9a4.5 4.5 0 1 1-4 0z"/><path d="M12 9v7"/></svg><span id="pTemp">-12,5°</span></span>
+        <span class="chip atm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3s6 7 6 11a6 6 0 1 1-12 0c0-4 6-11 6-11z"/></svg><span id="pAtm">6,0%</span></span>
+      </div>
+      <div class="pname" id="pName">PÁRAMO FRÍO</div>
+    </div>
+
+    <div class="planet-tabs reveal">
+      <div class="ptab-row">
+        <button class="ptab active" data-state="frio">❄ FRÍO</button>
+        <button class="ptab" data-state="caliente">🔥 CALIENTE</button>
+        <button class="ptab" data-state="estable">🌿 ESTABLE</button>
+      </div>
+      <p id="pDesc">Un mundo helado y silencioso. Bajo el hielo, la vida espera su oportunidad. Enciende los calefactores geotérmicos.</p>
+      <div class="fauna-row">
+        <span class="fauna">🐰 Conejo</span><span class="fauna">🦆 Pato</span><span class="fauna">🐝 EnjambreAbejas</span><span class="fauna">🦋 Polilla</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="starmap-box reveal">
+    <div class="starmap-head">
+      <h3>✦ MAPA ESTELAR</h3>
+      <div class="legend">
+        <span><i class="dot done"></i>RESTAURADO</span>
+        <span><i class="dot cur"></i>ACTUAL</span>
+        <span><i class="dot lock"></i>BLOQUEADO</span>
+      </div>
+    </div>
+    <svg id="starmapSvg" viewBox="0 0 1000 170"></svg>
+  </div>
+</section>
+
+<!-- ============ SISTEMAS ============ -->
+<section id="sistemas" class="section">
+  <span class="kicker reveal">Sistemas</span>
+  <h2 class="reveal">SISTEMAS DEL JUEGO Y RECOMPENSA</h2>
+  <div class="panels">
+    <article class="panel reveal" id="ecoPanel">
+      <h3>⚙ SISTEMA ECOLÓGICO</h3>
+      <div class="eco-grid">
+        <figure class="machine">
+          <img src="img/calentador.png" alt="Calefactor geotérmico">
+          <figcaption>CALEFACTOR GEOTÉRMICO</figcaption>
+        </figure>
+        <div>
+          <div class="mach-chips">
+            <span class="mchip on">🔥 Calefactor</span><span class="mchip">❄ Enfriador</span><span class="mchip">💧 Condensador</span><span class="mchip">🌱 Sembradora</span>
+          </div>
+          <div class="gauge">
+            <label>TEMPERATURA <b id="tempVal">-150,0°</b></label>
+            <div class="slider"><div class="bar"><span class="zone"></span><span class="marker" id="tempMark"></span></div><input type="range" id="tempRange" min="0" max="100" value="20" aria-label="Temperatura"></div>
+          </div>
+          <div class="gauge">
+            <label>ATMÓSFERA <b id="atmVal">12,0%</b></label>
+            <div class="slider"><div class="bar"><span class="zone"></span><span class="marker" id="atmMark"></span></div><input type="range" id="atmRange" min="0" max="100" value="20" aria-label="Atmósfera"></div>
+          </div>
+          <div class="green-badge" id="greenBadge">✔ ZONA VERDE (40–60)</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <h3>👁 POV ANIMAL · RECOMPENSA ESPECTÁCULO</h3>
+      <figure class="pov">
+        <img src='img/POV.jpeg' alt="POV animal">
+        <figcaption>Disfruta de tu creación a través de los ojos de sus habitantes.</figcaption>
+      </figure>
+      <p class="pov-note"><b>Sin interfaz.</b> Solo ríos, flores y vida. Así se siente un jardín terminado.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ DESCARGAR ============ -->
+<section id="descargar" class="section center">
+  <span class="float-fauna ff1">🐰</span><span class="float-fauna ff2">🐝</span><span class="float-fauna ff3">🦆</span><span class="float-fauna ff4">🌱</span>
+  <span class="kicker reveal">Descargar y plataformas</span>
+  <h2 class="reveal">¡RESTAURA EL FUTURO!</h2>
+  <p class="lead reveal">El Último Jardinero te espera. Disponible para PC y celular. La galaxia necesita más jardines.</p>
+  <div class="stores reveal">
+    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><circle cx="14.8" cy="9.2" r="2.5" fill="currentColor"/><circle cx="8.6" cy="15.2" r="1.6" fill="currentColor"/><path d="M10 14l2.6-2.7" stroke="currentColor" stroke-width="1.8"/></svg><span><small>Descargar en</small><b>STEAM / PC</b></span></a>
+    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 12.9c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.2-.9-2.3-3.2zM14.7 6.6c.6-.7 1-1.7.8-2.6-.9 0-1.9.6-2.4 1.3-.6.7-1 1.6-.9 2.5 1 .1 2-.5 2.5-1.2z"/></svg><span><small>Descargar en</small><b>APP STORE</b></span></a>
+    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17c0 .8.9 1.3 1.6.9l14-8.5c.7-.4.7-1.4 0-1.8l-14-8.5c-.7-.4-1.6.1-1.6.9z"/></svg><span><small>Descargar en</small><b>GOOGLE PLAY</b></span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="foot-left">
+      <span class="brand-hex">🌱</span>
+      <p>© 2025 ÚLTIMO JARDINERO · DERECHOS RESERVADOS</p>
+    </div>
+    <div class="socials">
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="Comunidad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v10H10l-4 4v-4H4z"/></svg></a>
+    </div>
+    <div class="atp-wrap">
+      <span class="atp">ATP</span>
+      <small>APTO PARA TODO PÚBLICO</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- STARFIELD ---------- */
+(function(){
+  var cv=document.getElementById('starfield'),cx=cv.getContext('2d'),W,H,starArr=[];
+  function make(){starArr=[];var n=Math.floor(W*H/9000);for(var i=0;i<n;i++){starArr.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*6.28,s:.5+Math.random()*1.6});}}
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;make();}
+  window.addEventListener('resize',resize);resize();
+  function tick(t){cx.clearRect(0,0,W,H);for(var i=0;i<starArr.length;i++){var st=starArr[i];cx.globalAlpha=.3+.7*Math.abs(Math.sin(st.p+t*.001*st.s));cx.fillStyle='#cfe8ff';cx.beginPath();cx.arc(st.x,st.y,st.r,0,6.29);cx.fill();}cx.globalAlpha=1;requestAnimationFrame(tick);}
+  requestAnimationFrame(tick);
+})();
+
+/* ---------- NAV SCROLL ---------- */
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);});
+
+/* ---------- REVEAL ---------- */
+(function(){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+
+/* ---------- PASOS ---------- */
+(function(){
+  var steps=Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var detail=document.getElementById('stepDetail');
+  var texts=[
+    'Lee los indicadores de Temperatura y Atmósfera: cada planeta comienza en un extremo hostil.',
+    'Construye sobre la rejilla hexagonal: cada máquina transforma su entorno.',
+    'Lleva ambos indicadores a la Zona Verde (40–60) para desbloquear la vida.',
+    'Siembra flora chica, mediana y grande; libera conejos, patos, abejas y polillas.',
+    'Con la ecología estabilizada, el Mapa Estelar te lleva al siguiente mundo.'
+  ];
+  var idx=0,wrap=document.getElementById('steps');
+  function set(i){idx=i;steps.forEach(function(s,k){s.classList.toggle('active',k===i);});detail.textContent=texts[i];}
+  steps.forEach(function(s){s.addEventListener('click',function(){set(parseInt(s.dataset.i,10));});});
+  setInterval(function(){if(!wrap.matches(':hover')){set((idx+1)%steps.length);}},3400);
+})();
+
+/* ---------- PLANETAS ---------- */
+(function(){
+  var DATA={
+    frio:{name:'PÁRAMO FRÍO',tag:'CONTAMINACIÓN',cls:'tag-red',temp:'-12,5°',atm:'6,0%',desc:'Un mundo helado y silencioso. Bajo el hielo, la vida espera su oportunidad. Enciende los calefactores geotérmicos.'},
+    caliente:{name:'PÁRAMO CALIENTE',tag:'SOBRECALENTAMIENTO',cls:'tag-orange',temp:'55,5°',atm:'10,0%',desc:'Gases concentrados calientan el planeta. Regula el clima y enfría lo suficiente antes de sembrar.'},
+    estable:{name:'PLANETA ESTABLE',tag:'VIDA ESTABILIZADA',cls:'tag-green',temp:'15,5°',atm:'24,0%',desc:'Ríos, flora y fauna en equilibrio. El jardín está completo… es hora de partir al siguiente mundo.'}
+  };
+  var tabs=document.querySelectorAll('.ptab'),imgs=document.querySelectorAll('.pimg');
+  function setState(k){
+    var d=DATA[k];
+    imgs.forEach(function(im){im.classList.toggle('active',im.dataset.state===k);});
+    tabs.forEach(function(tb){tb.classList.toggle('active',tb.dataset.state===k);});
+    var tag=document.getElementById('pTag');
+    tag.textContent=d.tag;tag.className='ptag '+d.cls;
+    document.getElementById('pTemp').textContent=d.temp;
+    document.getElementById('pAtm').textContent=d.atm;
+    document.getElementById('pName').textContent=d.name;
+    document.getElementById('pDesc').textContent=d.desc;
+  }
+  tabs.forEach(function(tb){tb.addEventListener('click',function(){setState(tb.dataset.state);});});
+})();
+
+/* ---------- ZONA VERDE ---------- */
+/* ---------- ZONA VERDE ---------- */
+(function(){
+  var tR=document.getElementById('tempRange'),aR=document.getElementById('atmRange');
+  var tM=document.getElementById('tempMark'),aM=document.getElementById('atmMark');
+  var tV=document.getElementById('tempVal'),aV=document.getElementById('atmVal');
+  var panel=document.getElementById('ecoPanel'),badge=document.getElementById('greenBadge');
+
+  // Mapeo de Temperatura: Extremos de -150 a 150, centro habitable de 10°C a 30°C
+  function fmtT(v) {
+    var temp;
+    if (v < 40) {
+      // Si el slider está entre 0 y 39, la temperatura va de -150° a 9°
+      temp = -150 + (v * 4); 
+    } else if (v > 60) {
+      // Si el slider está entre 61 y 100, la temperatura va de 33° a 150°
+      temp = 30 + ((v - 60) * 3); 
+    } else {
+      // ZONA VERDE: Si el slider está entre 40 y 60, la temperatura va de 10° a 30°
+      temp = 10 + (v - 40); 
+    }
+    return temp.toFixed(1).replace('.', ',') + '°C';
+  }
+
+  // Mapeo de Atmósfera: Directo de 0 a 100%. El centro (40-60) es la zona habitable.
+  function fmtA(v) {
+    return parseInt(v, 10) + '%';
+  }
+
+  function update(){
+    var tv=parseInt(tR.value,10),av=parseInt(aR.value,10);
+    tM.style.left=tv+'%';aM.style.left=av+'%';
+    tV.textContent=fmtT(tv);aV.textContent=fmtA(av);
+    
+    // La condición interna se mantiene intacta evaluando el rango de 40 a 60
+    var ok=tv>=40&&tv<=60&&av>=40&&av<=60;
+    panel.classList.toggle('green',ok);
+    badge.classList.toggle('show',ok);
+  }
+  
+  tR.addEventListener('input',update);aR.addEventListener('input',update);update();
+})();
+/* ---------- MAPA ESTELAR ---------- */
+(function(){
+  var svg=document.getElementById('starmapSvg');
+  var NS='http://www.w3.org/2000/svg';
+  var nodes=[
+    {n:'AETHEL',x:80,y:95,st:2},{n:'LUMIS',x:250,y:50,st:2},{n:'ORIZON',x:420,y:105,st:2},
+    {n:'IGNIS MINOR',x:590,y:50,st:1},{n:'ZUNARI',x:760,y:100,st:0},{n:'BALTHOS',x:930,y:45,st:0}
+  ];
+  var d='M '+nodes[0].x+' '+nodes[0].y;
+  for(var i=1;i<nodes.length;i++){var a=nodes[i-1],b=nodes[i];d+=' C '+(a.x+70)+' '+a.y+' '+(b.x-70)+' '+b.y+' '+b.x+' '+b.y;}
+  var path=document.createElementNS(NS,'path');
+  path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.22)');
+  path.setAttribute('stroke-width','2');path.setAttribute('stroke-dasharray','5 9');
+  svg.appendChild(path);
+  function hexPts(cx,cy,r){var pts=[];for(var k=0;k<6;k++){var ang=Math.PI/180*(60*k-30);pts.push((cx+r*Math.cos(ang)).toFixed(1)+','+(cy+r*Math.sin(ang)).toFixed(1));}return pts.join(' ');}
+  nodes.forEach(function(nd){
+    var poly=document.createElementNS(NS,'polygon');
+    poly.setAttribute('points',hexPts(nd.x,nd.y,22));
+    if(nd.st===2){poly.setAttribute('fill','#22c55e');poly.setAttribute('stroke','#86efac');}
+    else if(nd.st===1){poly.setAttribute('fill','#4cc9f0');poly.setAttribute('stroke','#bdeaff');poly.setAttribute('class','pulse');}
+    else{poly.setAttribute('fill','#1b2337');poly.setAttribute('stroke','#33405f');}
+    poly.setAttribute('stroke-width','2');
+    svg.appendChild(poly);
+    var ic=document.createElementNS(NS,'text');
+    ic.setAttribute('x',nd.x);ic.setAttribute('y',nd.y+5);ic.setAttribute('text-anchor','middle');
+    ic.setAttribute('style','font-size:14px;fill:'+(nd.st===0?'#55628a':'#041018')+';font-weight:700');
+    ic.textContent=nd.st===2?'✔':(nd.st===1?'✦':'');
+    svg.appendChild(ic);
+    var lb=document.createElementNS(NS,'text');
+    lb.setAttribute('x',nd.x);lb.setAttribute('y',nd.y+46);lb.setAttribute('text-anchor','middle');
+    lb.textContent=nd.n;
+    svg.appendChild(lb);
+  });
+})();
+</script>
+</body>
+</html>
