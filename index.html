@@ -5,26 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Último Jardinero — Restaura planetas muertos. Devuelve la vida a la galaxia. Un city-builder ecológico y positivo.">
 <title>ÚLTIMO JARDINERO — Restaura Planetas Muertos</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/700.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/outfit@latest/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/outfit@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/orbitron@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/orbitron@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/montserrat@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/montserrat@latest/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/montserrat@latest/700.css">
 <style>
 :root{
   --bg:#06060f;
-  --text:#eaf2ff;
-  --muted:#9aa7c7;
+  --text:#CFF8FF;
+  --muted:rgba(207,248,255,.62);
+  --title:#2EB7CF;
   --green:#5ef08e;
-  --green-deep:#22c55e;
   --blue:#4cc9f0;
-  --purple:#a78bfa;
-  --orange:#fb923c;
-  --red:#ef4444;
-  --line:rgba(255,255,255,.12);
-  --panel:rgba(255,255,255,.05);
+  --line:rgba(207,248,255,.14);
   --hexa:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  --font-display:'Space Grotesk','Outfit',sans-serif;
-  --font-body:'Outfit',sans-serif;
+  --font-display:'Orbitron','Montserrat',sans-serif;
+  --font-body:'Montserrat',sans-serif;
+  --fs-min:14.5px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
@@ -32,75 +30,63 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:var(--font-body);
+  font-size:var(--fs-min);
   overflow-x:hidden;
   background-image:
-    radial-gradient(1000px 600px at 85% -10%, rgba(76,201,240,.08), transparent 60%),
-    radial-gradient(900px 700px at -10% 40%, rgba(94,240,142,.07), transparent 60%),
-    radial-gradient(800px 600px at 70% 90%, rgba(167,139,250,.07), transparent 60%);
+    radial-gradient(1000px 600px at 85% -10%, rgba(46,183,207,.10), transparent 60%),
+    radial-gradient(900px 700px at -10% 40%, rgba(94,240,142,.07), transparent 60%);
 }
 #starfield{position:fixed;inset:0;z-index:-1;pointer-events:none}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--font-display)}
+h1,h2,h3{font-family:var(--font-display);color:var(--title)}
+button{font-family:inherit}
 
 /* ---------- NAV ---------- */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;
+  position:fixed;top:0;left:0;right:0;z-index:60;
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 28px;transition:background .35s, box-shadow .35s, padding .35s;
 }
 .nav.scrolled{background:rgba(6,6,15,.75);backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(0,0,0,.45);padding:10px 28px;border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;letter-spacing:.08em;font-size:15px}
-.brand b{color:var(--green)}
-.brand-hex{width:34px;height:38px;clip-path:var(--hexa);background:linear-gradient(160deg,var(--green),var(--blue));display:grid;place-items:center;font-size:16px}
-.links{display:flex;gap:26px;font-size:14px;letter-spacing:.06em}
+.links{display:flex;gap:26px;font-size:var(--fs-min);letter-spacing:.06em}
 .links a{color:var(--muted);position:relative;transition:color .25s}
 .links a:hover{color:var(--text)}
-.links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .3s}
+.links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--title),var(--blue));transition:width .3s}
 .links a:hover::after{width:100%}
 .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;cursor:pointer;border:none;font-family:var(--font-display);transition:transform .25s, box-shadow .25s, filter .25s}
-.btn-small{padding:10px 20px;font-size:13px;letter-spacing:.08em;background:rgba(94,240,142,.14);color:var(--green);border:1px solid rgba(94,240,142,.45)}
-.btn-small:hover{background:rgba(94,240,142,.25);transform:translateY(-2px)}
 
 /* ---------- HERO ---------- */
 #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center}
-.hero-bg{position:absolute;inset:0;background:url('img/portada.jpeg') center 68%/cover no-repeat;animation:kenburns 22s ease-in-out infinite alternate;filter:saturate(1.08)}
-@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-14px)}}
+.hero-bg{position:absolute;inset:0;background:url('img/HeroLanding.png') center 52%/cover no-repeat;animation:kenburns 26s ease-in-out infinite alternate;filter:saturate(1.08)}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1)}}
 .hero-vignette{position:absolute;inset:0;background:
-  radial-gradient(ellipse at 50% 42%, rgba(6,6,15,.15) 0%, rgba(6,6,15,.62) 55%, rgba(6,6,15,.94) 100%),
-  linear-gradient(180deg, rgba(6,6,15,.72) 0%, rgba(6,6,15,.15) 30%, rgba(6,6,15,.2) 62%, var(--bg) 100%)}
-.hero-content{position:relative;z-index:2;padding:120px 22px 80px;max-width:960px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(10px);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--green)}
-.hero-content h1{
-  margin:26px 0 14px;font-size:clamp(44px,9vw,104px);font-weight:700;letter-spacing:.04em;line-height:1.02;
-  background:linear-gradient(95deg,var(--green) 5%,var(--blue) 50%,var(--purple) 95%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 30px rgba(94,240,142,.35));
-}
-.hero-sub{font-size:clamp(16px,2.4vw,22px);color:#d7e3ff;letter-spacing:.06em;margin-bottom:36px}
+  radial-gradient(ellipse at 50% 46%, rgba(6,6,15,0) 0%, rgba(6,6,15,.28) 55%, rgba(6,6,15,.92) 100%),
+  linear-gradient(180deg, rgba(6,6,15,.78) 0%, rgba(6,6,15,.1) 28%, rgba(6,6,15,.12) 62%, var(--bg) 100%)}
+.hero-content{position:relative;z-index:2;padding:110px 22px 70px;max-width:960px;display:flex;flex-direction:column;align-items:center}
+.hero-title{width:min(90vw,880px);height:auto;margin:0 auto 10px;filter:drop-shadow(0 0 28px rgba(46,183,207,.45))}
+.hero-spacer{height:clamp(150px,26vh,300px)}
+.hero-sub{font-size:clamp(15px,2vw,18px);font-weight:700;color:var(--text);letter-spacing:.04em;margin-bottom:26px;text-shadow:0 2px 14px rgba(0,0,0,.8)}
 .btn-primary{
-  padding:18px 36px;font-size:15px;font-weight:700;letter-spacing:.1em;color:#041018;
-  background:linear-gradient(135deg,var(--green),var(--blue));
-  box-shadow:0 12px 45px rgba(94,240,142,.4), inset 0 1px 0 rgba(255,255,255,.5);
+  padding:15px 34px;font-size:15px;font-weight:700;letter-spacing:.1em;color:#041018;
+  background:linear-gradient(135deg,var(--title),var(--blue));
+  box-shadow:0 12px 45px rgba(46,183,207,.45), inset 0 1px 0 rgba(255,255,255,.5);
 }
-.btn-primary small{font-weight:700;opacity:.75;letter-spacing:.06em}
-.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 60px rgba(94,240,142,.55)}
-.platforms{display:flex;justify-content:center;gap:14px;margin-top:26px;flex-wrap:wrap}
-.plat{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line);backdrop-filter:blur(8px);font-size:13px;color:#cdd9f6;transition:transform .25s,border-color .25s}
-.plat:hover{transform:translateY(-3px);border-color:rgba(94,240,142,.5)}
-.plat svg{width:17px;height:17px}
-.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);animation:bounce 2s infinite;font-size:20px}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 60px rgba(46,183,207,.6)}
+.soon-label{margin-top:26px;color:var(--muted);font-size:var(--fs-min);letter-spacing:.1em}
+.platforms{display:flex;justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.plat{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line);backdrop-filter:blur(8px);font-size:var(--fs-min);color:var(--text);cursor:default}
+.plat svg{width:16px;height:16px}
+.hero-credit{position:absolute;bottom:18px;left:22px;z-index:2;color:var(--muted);font-size:var(--fs-min);letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.hero-credit b{color:var(--text)}
+.credit-logo{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(94,240,142,.55))}
+.scroll-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);animation:bounce 2s infinite;font-size:18px}
 @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
-.fhex{position:absolute;clip-path:var(--hexa);background:linear-gradient(160deg,rgba(94,240,142,.25),rgba(76,201,240,.12));z-index:1;animation:floaty 9s ease-in-out infinite}
-.fhex.h1{width:90px;height:100px;left:8%;top:24%;animation-delay:0s}
-.fhex.h2{width:56px;height:62px;right:10%;top:30%;animation-delay:2s;background:linear-gradient(160deg,rgba(167,139,250,.3),rgba(76,201,240,.12))}
-.fhex.h3{width:70px;height:78px;right:16%;bottom:20%;animation-delay:4s}
-@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-26px) rotate(8deg)}}
 
 /* ---------- SECCIONES ---------- */
 .section{max-width:1180px;margin:0 auto;padding:110px 24px}
-.kicker{display:inline-block;color:var(--green);letter-spacing:.4em;text-transform:uppercase;font-size:12px;margin-bottom:14px}
-.section h2{font-size:clamp(28px,4.6vw,46px);letter-spacing:.03em;margin-bottom:18px}
+.kicker{display:inline-block;color:var(--title);letter-spacing:.4em;text-transform:uppercase;font-size:var(--fs-min);margin-bottom:14px}
+.section h2{font-size:clamp(26px,4.6vw,44px);letter-spacing:.04em;margin-bottom:18px}
 .lead{color:var(--muted);font-size:clamp(15px,1.8vw,18px);max-width:760px;line-height:1.7}
 .center{text-align:center}
 .center .lead{margin:0 auto}
@@ -113,134 +99,217 @@ h1,h2,h3{font-family:var(--font-display)}
   backdrop-filter:blur(12px);box-shadow:0 20px 60px rgba(0,0,0,.35);
   transition:transform .35s, border-color .35s, box-shadow .35s;position:relative;overflow:hidden;
 }
-.card::before{content:'';position:absolute;top:-40%;left:-20%;width:60%;height:60%;background:radial-gradient(circle,rgba(94,240,142,.14),transparent 70%);opacity:0;transition:opacity .4s}
-.card:hover{transform:translateY(-8px);border-color:rgba(94,240,142,.4);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 40px rgba(94,240,142,.12)}
+.card::before{content:'';position:absolute;top:-40%;left:-20%;width:60%;height:60%;background:radial-gradient(circle,rgba(46,183,207,.16),transparent 70%);opacity:0;transition:opacity .4s}
+.card:hover{transform:translateY(-8px);border-color:rgba(46,183,207,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 40px rgba(46,183,207,.14)}
 .card:hover::before{opacity:1}
-.card-icon{width:56px;height:56px;border-radius:16px;background:rgba(94,240,142,.12);border:1px solid rgba(94,240,142,.35);display:grid;place-items:center;margin-bottom:20px;color:var(--green)}
+.card-icon{width:56px;height:56px;border-radius:16px;background:rgba(46,183,207,.12);border:1px solid rgba(46,183,207,.4);display:grid;place-items:center;margin-bottom:20px;color:var(--title)}
 .card-icon svg{width:28px;height:28px}
-.card h3{font-size:17px;letter-spacing:.1em;margin-bottom:12px;color:var(--text)}
-.card p{color:var(--muted);font-size:14.5px;line-height:1.65}
+.card h3{font-size:17px;letter-spacing:.1em;margin-bottom:12px}
+.card p{color:var(--muted);font-size:var(--fs-min);line-height:1.65}
 
 /* ---------- PASOS ---------- */
 .steps{display:flex;justify-content:center;align-items:flex-start;gap:14px;margin-top:56px;position:relative;flex-wrap:wrap}
-.steps::before{content:'';position:absolute;top:64px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,rgba(94,240,142,.4),rgba(76,201,240,.4),transparent);z-index:0}
-.step{background:none;border:none;color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;width:170px;z-index:1;font-family:var(--font-body)}
+.steps::before{content:'';position:absolute;top:64px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,rgba(94,240,142,.4),rgba(46,183,207,.4),transparent);z-index:0}
+.step{background:none;border:none;color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;width:176px;z-index:1;font-family:var(--font-body)}
 .hexwrap{position:relative;width:118px;height:130px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.5));transition:filter .35s, transform .35s}
 .hexwrap::before{content:'';position:absolute;inset:0;clip-path:var(--hexa);background:rgba(255,255,255,.22);transition:background .35s}
 .hexwrap::after{content:'';position:absolute;inset:2px;clip-path:var(--hexa);background:linear-gradient(165deg,#12203a,#0a1222 60%,#0e2430)}
 .hex-ico{position:relative;z-index:2;width:100%;height:100%;display:grid;place-items:center;color:var(--blue);transition:color .3s}
 .hex-ico svg{width:42px;height:42px}
-.step-num{position:absolute;z-index:2;top:10px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;color:var(--muted)}
-.step.active .hexwrap{filter:drop-shadow(0 0 22px rgba(94,240,142,.55));transform:translateY(-6px)}
-.step.active .hexwrap::before{background:var(--green)}
-.step.active .hex-ico{color:var(--green)}
-.step-name{font-family:var(--font-display);font-weight:700;letter-spacing:.16em;font-size:14px}
-.step-desc{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:160px}
+.step-num{position:absolute;z-index:2;top:8px;left:50%;transform:translateX(-50%);font-size:var(--fs-min);letter-spacing:.24em;color:var(--muted)}
+.step.active .hexwrap{filter:drop-shadow(0 0 22px rgba(46,183,207,.55));transform:translateY(-6px)}
+.step.active .hexwrap::before{background:#2EB7CF}
+.step.active .hex-ico{color:#2EB7CF}
+.step-name{font-family:var(--font-display);font-weight:700;letter-spacing:.14em;font-size:var(--fs-min)}
+.step-desc{color:var(--muted);font-size:var(--fs-min);line-height:1.55;max-width:168px}
 .step-detail{
   margin:44px auto 0;max-width:720px;text-align:center;padding:18px 26px;border-radius:16px;
   background:rgba(94,240,142,.08);border:1px solid rgba(94,240,142,.3);color:#c9f5da;font-size:15px;letter-spacing:.03em;
   backdrop-filter:blur(8px);transition:opacity .3s;
 }
 
-/* ---------- PLANETAS ---------- */
-.planet-wrap{display:grid;grid-template-columns:1.5fr 1fr;gap:26px;margin-top:52px;align-items:stretch}
-.planet-preview{position:relative;border-radius:26px;overflow:hidden;border:1px solid var(--line);min-height:420px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease;transform:scale(1.03)}
-.pimg.active{opacity:1}
-.ptag{position:absolute;top:18px;left:18px;padding:8px 16px;border-radius:10px;font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.22em;backdrop-filter:blur(8px);border:1px solid}
-.tag-red{color:#ffb4b4;background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.6)}
-.tag-orange{color:#ffd8b0;background:rgba(251,146,60,.18);border-color:rgba(251,146,60,.6)}
-.tag-green{color:#c9f5da;background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.65)}
-.pstats{position:absolute;top:18px;right:18px;display:flex;gap:10px}
-.chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:12px;background:rgba(6,10,20,.65);border:1px solid var(--line);backdrop-filter:blur(8px);font-family:var(--font-display);font-weight:700;font-size:14px}
-.chip svg{width:15px;height:15px}
-.chip.temp{color:#8fd8ff}.chip.atm{color:#9ff0c0}
-.pname{position:absolute;bottom:18px;left:18px;font-family:var(--font-display);font-weight:700;font-size:clamp(18px,2.4vw,26px);letter-spacing:.12em;text-shadow:0 4px 20px rgba(0,0,0,.8)}
-.planet-tabs{display:flex;flex-direction:column;gap:14px}
-.ptab-row{display:flex;gap:10px;flex-wrap:wrap}
-.ptab{padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-family:var(--font-display);font-weight:700;letter-spacing:.1em;font-size:13px;transition:all .3s;backdrop-filter:blur(8px)}
-.ptab:hover{color:var(--text);transform:translateY(-2px)}
-.ptab.active{color:var(--green);border-color:rgba(94,240,142,.55);background:rgba(94,240,142,.1);box-shadow:0 0 24px rgba(94,240,142,.18)}
-#pDesc{color:var(--muted);line-height:1.7;font-size:15px;padding:20px 22px;border-radius:18px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(10px);flex:1}
-.fauna-row{display:flex;gap:10px;flex-wrap:wrap}
-.fauna{padding:8px 14px;border-radius:999px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.35);font-size:12.5px;color:#ded1ff;letter-spacing:.05em}
-.starmap-box{margin-top:44px;border-radius:24px;border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px);padding:28px 26px 12px}
-.starmap-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px}
-.starmap-head h3{letter-spacing:.3em;font-size:14px;color:var(--blue)}
-.legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);letter-spacing:.08em}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.dot{width:10px;height:11px;clip-path:var(--hexa);display:inline-block}
-.dot.done{background:var(--green-deep)}.dot.cur{background:var(--blue)}.dot.lock{background:#2a3350}
-#starmapSvg{width:100%;height:auto;display:block}
-#starmapSvg text{font-family:var(--font-display);letter-spacing:.18em;font-size:11px;fill:var(--muted)}
-#starmapSvg .pulse{animation:nodepulse 1.6s ease-in-out infinite}
-@keyframes nodepulse{0%,100%{opacity:1}50%{opacity:.35}}
-
-/* ---------- SISTEMAS ---------- */
-.panels{display:grid;grid-template-columns:1.15fr 1fr;gap:26px;margin-top:52px}
-.panel{border-radius:26px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(12px);padding:30px;box-shadow:0 24px 70px rgba(0,0,0,.4);transition:border-color .4s, box-shadow .4s}
-.panel h3{letter-spacing:.22em;font-size:15px;color:var(--blue);margin-bottom:22px}
-.panel.green{border-color:rgba(34,197,94,.65);box-shadow:0 0 50px rgba(34,197,94,.22),0 24px 70px rgba(0,0,0,.4)}
-.eco-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:start}
-.machine{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0b1322}
-.machine img{width:100%;height:230px;object-fit:cover;object-position:center 60%}
-.machine figcaption{padding:12px;text-align:center;font-family:var(--font-display);font-weight:700;letter-spacing:.2em;font-size:11.5px;color:var(--orange)}
-.mach-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.mchip{padding:7px 13px;border-radius:10px;font-size:12px;letter-spacing:.06em;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.04)}
-.mchip.on{color:var(--orange);border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.12)}
-.gauge{margin-bottom:20px}
-.gauge label{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
-.gauge label b{color:var(--text);letter-spacing:.06em;font-size:14px}
-.slider{position:relative;height:26px}
-.bar{position:absolute;left:0;right:0;top:50%;height:10px;transform:translateY(-50%);background:rgba(255,255,255,.1);border-radius:999px}
-.zone{position:absolute;left:40%;width:20%;top:-3px;bottom:-3px;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:999px;box-shadow:0 0 14px rgba(74,222,128,.55)}
-.marker{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 0 14px rgba(255,255,255,.7);left:20%;transition:left .1s linear}
-.slider input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;margin:0}
-.green-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;background:rgba(34,197,94,.16);border:1px solid rgba(34,197,94,.6);color:#a7f3c9;font-family:var(--font-display);font-weight:700;letter-spacing:.2em;font-size:12.5px;opacity:.25;transform:scale(.96);transition:all .35s}
-.green-badge.show{opacity:1;transform:scale(1);box-shadow:0 0 30px rgba(34,197,94,.35)}
-.pov{border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
-.pov img{width:100%;height:330px;object-fit:cover;transition:transform 6s ease}
-.panel:hover .pov img{transform:scale(1.08)}
-.pov figcaption{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;background:linear-gradient(transparent,rgba(4,8,16,.9));font-size:14px;color:#d9e6ff;letter-spacing:.03em}
-.pov-note{margin-top:16px;color:var(--muted);font-size:14px;letter-spacing:.08em}
-.pov-note b{color:var(--purple)}
-
-/* ---------- DESCARGAR ---------- */
+/* ---------- DESCARGAR / PRÓXIMAMENTE ---------- */
 #descargar{position:relative;overflow:hidden}
-.stores{display:flex;justify-content:center;gap:18px;margin-top:44px;flex-wrap:wrap}
-.store{display:flex;align-items:center;gap:14px;padding:16px 26px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--line);backdrop-filter:blur(10px);transition:all .3s;min-width:220px}
-.store:hover{transform:translateY(-5px);border-color:rgba(94,240,142,.55);box-shadow:0 16px 50px rgba(94,240,142,.18)}
-.store svg{width:30px;height:30px;color:var(--green)}
-.store small{display:block;color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-.store b{font-family:var(--font-display);font-size:16px;letter-spacing:.08em}
-.float-fauna{position:absolute;font-size:30px;filter:drop-shadow(0 0 14px rgba(94,240,142,.7));animation:floaty 8s ease-in-out infinite;opacity:.85;pointer-events:none}
+.soon-pill{
+  display:inline-block;margin-top:34px;padding:9px 22px;border-radius:999px;
+  background:rgba(46,183,207,.12);border:1px solid rgba(46,183,207,.55);color:var(--title);
+  font-family:var(--font-display);font-weight:700;letter-spacing:.3em;font-size:var(--fs-min);
+}
+.stores{display:flex;justify-content:center;gap:18px;margin-top:20px;flex-wrap:wrap}
+.store{display:flex;align-items:center;gap:14px;padding:16px 26px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--line);backdrop-filter:blur(10px);min-width:220px;cursor:default}
+.store svg{width:30px;height:30px;color:var(--title)}
+.store small{display:block;color:var(--muted);font-size:var(--fs-min);letter-spacing:.16em;text-transform:uppercase}
+.store b{font-family:var(--font-display);font-size:16px;letter-spacing:.08em;color:var(--text)}
+.float-fauna{
+  position:absolute;width:64px;height:64px;display:grid;place-items:center;object-fit:contain;
+  filter:drop-shadow(0 0 14px rgba(94,240,142,.7));animation:floaty 8s ease-in-out infinite;opacity:.9;pointer-events:none;
+  font-size:30px;border-radius:12px;
+}
 .ff1{left:8%;top:22%}.ff2{right:9%;top:30%;animation-delay:1.5s}.ff3{left:14%;bottom:20%;animation-delay:3s}.ff4{right:15%;bottom:24%;animation-delay:4.5s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-26px) rotate(8deg)}}
+
+/* ---------- QUIÉNES SOMOS ---------- */
+#quienes-somos{position:relative}
+.qs-head{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:6px 0 40px}
+.qs-head h2{margin:0;font-family:'Montserrat',sans-serif}
+.qs-logo{width:clamp(72px,9vw,110px);height:clamp(72px,9vw,110px);object-fit:contain;filter:drop-shadow(0 0 22px rgba(94,240,142,.35))}
+.qs-text{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.qs-text p{color:var(--muted);font-size:15px;line-height:1.75}
+.qs-text b{color:var(--text)}
+.team{display:flex;flex-wrap:wrap;justify-content:center;gap:38px 30px;margin-top:56px}
+.member{
+  width:236px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:22px;padding:28px 20px 24px;backdrop-filter:blur(10px);
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.member:hover{transform:translateY(-6px);border-color:rgba(46,183,207,.5);box-shadow:0 22px 60px rgba(0,0,0,.5),0 0 30px rgba(46,183,207,.12)}
+.member-photo{
+  width:108px;height:108px;border-radius:50%;object-fit:cover;
+  border:2px solid rgba(46,183,207,.45);box-shadow:0 0 0 5px rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.55);
+}
+.member h3{font-family:var(--font-body);font-weight:700;font-size:16px;letter-spacing:.02em;color:var(--title);line-height:1.3}
+.member p{color:var(--muted);font-size:var(--fs-min);line-height:1.6;flex:1}
+.member-li{
+  width:38px;height:38px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--muted);transition:all .3s;background:rgba(255,255,255,.04);
+}
+.member-li:hover{color:var(--title);border-color:rgba(46,183,207,.55);transform:translateY(-3px)}
+.member-li svg{width:17px;height:17px}
+.qs-contact{margin-top:76px}
+.qs-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:8px}
+.contact-item{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:var(--fs-min);letter-spacing:.04em;transition:color .25s;width:fit-content}
+.contact-item:hover{color:var(--text)}
+.contact-item svg{width:22px;height:22px;color:var(--title);flex:none}
+.contact-item u{text-underline-offset:4px}
 
 /* ---------- FOOTER ---------- */
 footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14,.7);backdrop-filter:blur(10px)}
 .foot{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
 .foot-left{display:flex;align-items:center;gap:14px}
-.foot-left p{color:var(--muted);font-size:12.5px;letter-spacing:.1em}
+.foot-left p{color:var(--muted);font-size:var(--fs-min);letter-spacing:.1em}
+.foot-logo{width:30px;height:30px;object-fit:contain}
 .socials{display:flex;gap:12px}
 .socials a{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);transition:all .3s;background:rgba(255,255,255,.04)}
-.socials a:hover{color:var(--green);border-color:rgba(94,240,142,.5);transform:translateY(-3px)}
+.socials a:hover{color:var(--title);border-color:rgba(46,183,207,.55);transform:translateY(-3px)}
 .socials svg{width:18px;height:18px}
 .atp-wrap{display:flex;align-items:center;gap:12px}
-.atp{width:46px;height:46px;border:2px solid var(--green);border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;color:var(--green);letter-spacing:.05em;box-shadow:0 0 20px rgba(94,240,142,.25)}
-.atp-wrap small{color:var(--muted);font-size:11px;letter-spacing:.14em;max-width:130px;line-height:1.5}
+.atp{width:46px;height:46px;border:2px solid var(--title);border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;color:var(--title);letter-spacing:.05em;box-shadow:0 0 20px rgba(46,183,207,.25)}
+.atp-wrap small{color:var(--muted);font-size:var(--fs-min);letter-spacing:.12em;max-width:140px;line-height:1.5}
 
 /* ---------- REVEAL ---------- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 
+/* ---------- TRÁILER ---------- */
+#trailer{max-width:1180px;margin:0 auto;padding:110px 24px;text-align:center;position:relative}
+.tr-frame{
+  position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);background:#000;
+  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(46,183,207,.12);
+  transition:box-shadow .4s, transform .4s;
+}
+.tr-frame:hover{transform:translateY(-4px);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(94,240,142,.2)}
+.tr-frame img{width:100%;height:100%;object-fit:cover;opacity:.92;transition:transform 1.4s ease, filter .4s;filter:saturate(1.05)}
+.tr-frame:hover img{transform:scale(1.06);filter:saturate(1.2)}
+.tr-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,8,16,.35),transparent 30%,transparent 60%,rgba(4,8,16,.75));pointer-events:none}
+.tr-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;
+  width:96px;height:106px;clip-path:var(--hexa);
+  background:linear-gradient(160deg,var(--title),var(--blue));
+  display:grid;place-items:center;
+  filter:drop-shadow(0 0 30px rgba(46,183,207,.65));
+  transition:transform .3s;animation:trPulse 2.4s ease-in-out infinite;
+}
+.tr-frame:hover .tr-play{transform:translate(-50%,-50%) scale(1.1)}
+.tr-play svg{width:36px;height:36px;color:#041018;margin-left:5px}
+@keyframes trPulse{0%,100%{filter:drop-shadow(0 0 18px rgba(46,183,207,.45))}50%{filter:drop-shadow(0 0 42px rgba(46,183,207,.85))}}
+.tr-badge{position:absolute;top:16px;left:16px;z-index:2;padding:8px 16px;border-radius:10px;font-family:var(--font-display);font-weight:700;font-size:var(--fs-min);letter-spacing:.2em;color:#ffd8b0;background:rgba(251,146,60,.18);border:1px solid rgba(251,146,60,.6);backdrop-filter:blur(8px)}
+.tr-time{position:absolute;bottom:16px;right:16px;z-index:2;padding:6px 12px;border-radius:10px;background:rgba(6,10,20,.7);border:1px solid var(--line);backdrop-filter:blur(8px);font-family:var(--font-display);font-weight:700;font-size:var(--fs-min);letter-spacing:.1em}
+.tr-hint{position:absolute;bottom:16px;left:16px;z-index:2;font-size:var(--fs-min);letter-spacing:.12em;color:var(--text);text-transform:uppercase;opacity:.85}
+.tr-sub{margin-top:22px;color:var(--muted);font-size:var(--fs-min);letter-spacing:.05em}
+.tr-sub b{color:var(--green)}
+
+/* ---------- MODAL DE VIDEO ---------- */
+.tr-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.tr-modal.open{display:flex}
+.tr-backdrop{position:absolute;inset:0;background:rgba(3,5,12,.9);backdrop-filter:blur(10px)}
+.tr-dialog{
+  position:relative;width:min(1040px,94vw);aspect-ratio:16/9;background:#000;
+  border-radius:18px;border:1px solid var(--line);overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 80px rgba(46,183,207,.15);
+  animation:trZoom .35s ease;
+}
+@keyframes trZoom{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.tr-screen{position:relative;width:100%;height:100%;background:#000}
+.tr-screen video,.tr-screen iframe{width:100%;height:100%;border:0;display:block;object-fit:contain;background:#000}
+.tr-close{
+  position:absolute;top:10px;right:10px;z-index:5;width:40px;height:40px;border-radius:12px;
+  border:1px solid var(--line);background:rgba(6,10,20,.75);color:#fff;cursor:pointer;
+  font-size:16px;display:grid;place-items:center;backdrop-filter:blur(8px);transition:all .25s;
+}
+.tr-close:hover{color:var(--title);border-color:rgba(46,183,207,.55);transform:rotate(90deg)}
+.tr-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(0,0,0,.55);color:var(--text);font-size:var(--fs-min);letter-spacing:.06em;text-align:center;z-index:3}
+.tr-overlay small{color:var(--muted);font-size:var(--fs-min)}
+.tr-playbtn{width:92px;height:102px;clip-path:var(--hexa);background:linear-gradient(160deg,var(--title),var(--blue));border:none;cursor:pointer;display:grid;place-items:center;filter:drop-shadow(0 0 26px rgba(46,183,207,.6));transition:transform .25s}
+.tr-playbtn:hover{transform:scale(1.08)}
+.tr-playbtn svg{width:34px;height:34px;color:#041018;margin-left:4px}
+.tr-error{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0f1c;color:#ffb4b4;text-align:center;padding:30px;font-size:15px;line-height:1.7;z-index:3}
+.tr-error small{color:var(--muted)}
+.tr-error b{color:#fff}
+
+/* ---------- MENÚ MOBILE ---------- */
+.nav-burger{
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  width:42px;height:40px;border-radius:12px;border:1px solid var(--line);margin-left:auto;
+  background:rgba(255,255,255,.06);cursor:pointer;transition:border-color .3s,background .3s;
+}
+.nav-burger span{display:block;width:20px;height:2px;border-radius:2px;background:var(--title);transition:transform .3s,opacity .3s}
+.nav-burger:hover{border-color:rgba(46,183,207,.5);background:rgba(46,183,207,.1)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed;inset:0;z-index:55;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;
+  background:rgba(6,6,15,.94);backdrop-filter:blur(18px);
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{
+  font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--text);padding:13px 26px;border-radius:14px;
+  opacity:0;transform:translateY(14px);transition:opacity .4s,transform .4s,color .25s,background .25s;
+}
+.mobile-menu.open a{opacity:1;transform:none}
+.mobile-menu a:hover{color:var(--title);background:rgba(46,183,207,.1)}
+.mobile-menu a:nth-child(1){transition-delay:.05s}
+.mobile-menu a:nth-child(2){transition-delay:.10s}
+.mobile-menu a:nth-child(3){transition-delay:.15s}
+.mobile-menu a:nth-child(4){transition-delay:.20s}
+.mobile-menu a:nth-child(5){transition-delay:.25s}
+.mobile-menu a:nth-child(6){transition-delay:.30s}
+.mobile-menu .mm-cta{
+  margin-top:16px;font-size:var(--fs-min);color:#041018;letter-spacing:.18em;
+  background:linear-gradient(135deg,var(--title),var(--blue));
+  padding:14px 34px;border-radius:999px;box-shadow:0 10px 40px rgba(46,183,207,.35);
+}
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:960px){
   .links{display:none}
+  .nav-burger{display:flex}
   .cards{grid-template-columns:1fr}
-  .planet-wrap,.panels,.eco-grid{grid-template-columns:1fr}
   .steps::before{display:none}
-  .planet-preview{min-height:320px}
-  .machine img{height:280px}
+}
+@media (max-width:700px){
+  .hero-credit{left:14px;bottom:12px}
+  .qs-contact-grid{grid-template-columns:1fr}
+  .qs-head{gap:12px}
+}
+@media (max-width:640px){
+  .tr-play{width:70px;height:78px}.tr-play svg{width:26px;height:26px}
+  .tr-hint{display:none}
 }
 </style>
 </head>
@@ -249,32 +318,32 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
 <canvas id="starfield"></canvas>
 
 <header class="nav" id="nav">
-  <a class="brand" href="#hero"><span class="brand-hex">🌱</span>ÚLTIMO&nbsp;<b>JARDINERO</b></a>
   <nav class="links">
     <a href="#concepto">Concepto</a>
     <a href="#como-jugar">Cómo jugar</a>
-    <a href="#planetas">Planetas</a>
-    <a href="#sistemas">Sistemas</a>
+    <a href="#trailer">Trailer</a>
+    <a href="#quienes-somos">Equipo</a>
+    
   </nav>
-  <a href="#descargar" class="btn btn-small">DESCARGAR</a>
 </header>
 
 <!-- ============ HERO ============ -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-vignette"></div>
-  <span class="fhex h1"></span><span class="fhex h2"></span><span class="fhex h3"></span>
   <div class="hero-content">
-    <span class="hero-badge">🤖 Una fantasía ecológica positiva</span>
-    <h1>ÚLTIMO JARDINERO</h1>
-    <p class="hero-sub">Restaura planetas y devuelve la vida a la galaxia.</p>
-    <a class="btn btn-primary" href="#descargar">DESCARGAR AHORA <small>(PC / CELULAR)</small></a>
-    <div class="platforms">
+    <img class="hero-title" src="img/Titulo UJ.svg" alt="Último Jardinero">
+    <div class="hero-spacer" aria-hidden="true"></div>
+    <p class="hero-sub">Donde otros conquistarían un mundo, vos lo ayudas a florecer.</p>
+    <a class="btn btn-primary" href="#descargar">¡JUGÁ AHORA!</a>
+    <p class="soon-label">Próximamente:</p>
+    <div class="platforms" aria-label="Plataformas (próximamente)">
       <span class="plat"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><circle cx="14.8" cy="9.2" r="2.5" fill="currentColor"/><circle cx="8.6" cy="15.2" r="1.6" fill="currentColor"/><path d="M10 14l2.6-2.7" stroke="currentColor" stroke-width="1.8"/></svg>Steam</span>
       <span class="plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 12.9c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.2-.9-2.3-3.2zM14.7 6.6c.6-.7 1-1.7.8-2.6-.9 0-1.9.6-2.4 1.3-.6.7-1 1.6-.9 2.5 1 .1 2-.5 2.5-1.2z"/></svg>App Store</span>
       <span class="plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17c0 .8.9 1.3 1.6.9l14-8.5c.7-.4.7-1.4 0-1.8l-14-8.5c-.7-.4-1.6.1-1.6.9z"/></svg>Google Play</span>
     </div>
   </div>
+  <p class="hero-credit">Un juego realizado por <b>Terrabloom</b> <img class="credit-logo" src="img/Logo-SinBG.svg" alt="Logo Terrabloom" data-fb="logo"></p>
   <div class="scroll-hint">▼</div>
 </section>
 
@@ -282,22 +351,23 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
 <section id="concepto" class="section">
   <span class="kicker reveal">El concepto</span>
   <h2 class="reveal">UNA FANTASÍA ECOLÓGICA POSITIVA</h2>
-  <p class="lead reveal">Eres <b style="color:var(--green)">UJ</b>, un robot autónomo programado para terraformar planetas inhóspitos. Restaura el equilibrio ecológico, cultiva la vida y prepara el hogar perfecto para los humanos.</p>
+  <p class="lead reveal">Transformá mundos inhabitables en nuevos hogares. Gestioná recursos, equilibrá el clima y sembá vida mientras <b style="color:var(--blue)">UJ</b> convierte cada planeta en un ecosistema listo para recibir a la humanidad</p>
   <div class="cards">
     <article class="card reveal">
       <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20h16"/><path d="M6 20v-6l4-2v8"/><path d="M14 20V9l4-2v13"/><path d="M12 3c-2 1.5-2 3.5 0 5 2-1.5 2-3.5 0-5z" fill="currentColor" stroke="none"/></svg></div>
-      <h3>CITY BUILDER INVERTIDO</h3>
-      <p>Transforma el caos en orden: construye, terraforma y, cuando el jardín florece… retírate. La naturaleza toma el mando.</p>
+      <h3>City Builder invertido</h3>
+      <p>En lugar de expandir y exploitar recursos, el foco está en restaurar ecosistemas, logrando el objetivo de restaurar la humanidad en nuevos planetas</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M19 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M12 20c-2.5-1-4-3-4-5 2.5 0 4 2 4 5z" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Aleatoriedad y variedad de biomas</h3>
+      <p>Cada mundo combina condiciones ambientales, fauna y comportamientos variables.</p>
     </article>
     <article class="card reveal">
       <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16v10H10l-4 4v-4H4z"/><path d="M12 13.2s-2.6-1.7-2.6-3.3c0-.9.7-1.5 1.4-1.5.5 0 .9.2 1.2.7.3-.5.7-.7 1.2-.7.7 0 1.4.6 1.4 1.5 0 1.6-2.6 3.3-2.6 3.3z" fill="currentColor" stroke="none"/></svg></div>
-      <h3>MINIMALISMO NARRATIVO</h3>
-      <p>Descubre la historia a través de la transformación y la soledad. Sin diálogos: solo tú, el viento y los mundos que despiertan.</p>
-    </article>
-    <article class="card reveal">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M19 8l-2.5 5a3 3 0 0 0 5 0z"/><path d="M12 20c-2.5-1-4-3-4-5 2.5 0 4 2 4 5z" fill="currentColor" stroke="none"/></svg></div>
-      <h3>RESTAURA LA VIDA</h3>
-      <p>Un sistema que recompensa la creación, no la supervivencia. Equilibra temperatura y atmósfera y desata la vida.</p>
+      <h3>Modo POV Animal</h3>
+      <p>Descubre el punto de vista de nuestros nuevos amigos planetarios, recorriendo los nuevos ambientes restaurados.</p>
     </article>
   </div>
 </section>
@@ -325,7 +395,7 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
     <button class="step" data-i="3">
       <span class="hexwrap"><span class="step-num">04</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21v-8"/><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M12 13c0-4-3-6-7-6 0 4 3 6 7 6z"/></svg></span></span>
       <span class="step-name">SEMBRAR Y CONTEMPLAR</span>
-      <span class="step-desc">Siembra la flora necesaria para mantener el equilibrio ecológico. contempla la vida floreciendo.</span>
+      <span class="step-desc">Siembra la flora necesaria para mantener el equilibrio ecológico. Contempla la vida floreciendo.</span>
     </button>
     <button class="step" data-i="4">
       <span class="hexwrap"><span class="step-num">05</span><span class="hex-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2c4 3 5 8 3 13h-6C7 10 8 5 12 2z"/><circle cx="12" cy="9" r="2"/><path d="M9 15l-2 5 4-2 4 2-2-5"/></svg></span></span>
@@ -336,82 +406,13 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
   <div class="step-detail reveal" id="stepDetail">Lee los indicadores del planeta: cada mundo comienza en un extremo hostil. Tu misión: llevarlo al equilibrio.</div>
 </section>
 
-
-<style>
-/* ---------- TRÁILER ---------- */
-#trailer{max-width:1180px;margin:0 auto;padding:110px 24px;text-align:center;position:relative}
-.tr-frame{
-  position:relative;aspect-ratio:16/9;border-radius:26px;overflow:hidden;cursor:pointer;
-  border:1px solid var(--line);background:#000;
-  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(76,201,240,.12);
-  transition:box-shadow .4s, transform .4s;
-}
-.tr-frame:hover{transform:translateY(-4px);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(94,240,142,.2)}
-.tr-frame img{width:100%;height:100%;object-fit:cover;opacity:.92;transition:transform 1.4s ease, filter .4s;filter:saturate(1.05)}
-.tr-frame:hover img{transform:scale(1.06);filter:saturate(1.2)}
-.tr-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,8,16,.35),transparent 30%,transparent 60%,rgba(4,8,16,.75));pointer-events:none}
-.tr-play{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;
-  width:96px;height:106px;clip-path:var(--hexa);
-  background:linear-gradient(160deg,var(--green),var(--blue));
-  display:grid;place-items:center;
-  filter:drop-shadow(0 0 30px rgba(94,240,142,.65));
-  transition:transform .3s;animation:trPulse 2.4s ease-in-out infinite;
-}
-.tr-frame:hover .tr-play{transform:translate(-50%,-50%) scale(1.1)}
-.tr-play svg{width:36px;height:36px;color:#041018;margin-left:5px}
-@keyframes trPulse{0%,100%{filter:drop-shadow(0 0 18px rgba(94,240,142,.45))}50%{filter:drop-shadow(0 0 42px rgba(94,240,142,.85))}}
-.tr-badge{position:absolute;top:16px;left:16px;z-index:2;padding:8px 16px;border-radius:10px;font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.22em;color:#ffd8b0;background:rgba(251,146,60,.18);border:1px solid rgba(251,146,60,.6);backdrop-filter:blur(8px)}
-.tr-time{position:absolute;bottom:16px;right:16px;z-index:2;padding:6px 12px;border-radius:10px;background:rgba(6,10,20,.7);border:1px solid var(--line);backdrop-filter:blur(8px);font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.1em}
-.tr-hint{position:absolute;bottom:16px;left:16px;z-index:2;font-size:12.5px;letter-spacing:.14em;color:#cdd9f6;text-transform:uppercase;opacity:.85}
-.tr-sub{margin-top:22px;color:var(--muted);font-size:14.5px;letter-spacing:.05em}
-.tr-sub b{color:var(--green)}
-
-/* ---------- MODAL DE VIDEO ---------- */
-.tr-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-.tr-modal.open{display:flex}
-.tr-backdrop{position:absolute;inset:0;background:rgba(3,5,12,.9);backdrop-filter:blur(10px)}
-.tr-dialog{
-  position:relative;width:min(1040px,94vw);aspect-ratio:16/9;background:#000;
-  border-radius:18px;border:1px solid var(--line);overflow:hidden;
-  box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 80px rgba(94,240,142,.15);
-  animation:trZoom .35s ease;
-}
-@keyframes trZoom{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-.tr-screen{position:relative;width:100%;height:100%;background:#000}
-.tr-screen video,.tr-screen iframe{width:100%;height:100%;border:0;display:block;object-fit:contain;background:#000}
-.tr-close{
-  position:absolute;top:10px;right:10px;z-index:5;width:40px;height:40px;border-radius:12px;
-  border:1px solid var(--line);background:rgba(6,10,20,.75);color:#fff;cursor:pointer;
-  font-size:16px;display:grid;place-items:center;backdrop-filter:blur(8px);transition:all .25s;
-}
-.tr-close:hover{color:var(--green);border-color:rgba(94,240,142,.55);transform:rotate(90deg)}
-
-/* ---------- OVERLAY "AUTOPLAY BLOQUEADO" ---------- */
-.tr-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(0,0,0,.55);color:#d7e3ff;font-size:14px;letter-spacing:.06em;text-align:center;z-index:3}
-.tr-overlay small{color:var(--muted)}
-.tr-playbtn{width:92px;height:102px;clip-path:var(--hexa);background:linear-gradient(160deg,var(--green),var(--blue));border:none;cursor:pointer;display:grid;place-items:center;filter:drop-shadow(0 0 26px rgba(94,240,142,.6));transition:transform .25s}
-.tr-playbtn:hover{transform:scale(1.08)}
-.tr-playbtn svg{width:34px;height:34px;color:#041018;margin-left:4px}
-
-/* ---------- AVISO DE ERROR DE CARGA ---------- */
-.tr-error{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0f1c;color:#ffb4b4;text-align:center;padding:30px;font-size:15px;line-height:1.7;z-index:3}
-.tr-error small{color:var(--muted)}
-.tr-error b{color:#fff}
-@media (max-width:640px){
-  .tr-play{width:70px;height:78px}.tr-play svg{width:26px;height:26px}
-  .tr-hint{display:none}.tr-badge{font-size:10px}
-}
-</style>
-
-<!-- ---------- HTML DE LA SECCIÓN ---------- -->
+<!-- ============ TRÁILER ============ -->
 <section id="trailer">
   <span class="kicker reveal">Tráiler</span>
   <h2 class="reveal">MIRA EL JARDÍN COBRAR VIDA</h2>
 
-  <!-- 🎬 Tu video local: Trailer1.mp4 (junto a index.html) -->
   <div class="tr-frame reveal" id="trFrame" role="button" tabindex="0" aria-label="Reproducir tráiler"
-       data-tr-src="img/Trailer1.mp4"
+       data-tr-src="img/TrailerUJ.mp4"
        data-tr-poster="img/portada.jpeg">
     <img src="img/portada.jpeg" alt="Tráiler — Último Jardinero">
     <span class="tr-badge">🎬 GAMEPLAY REVEAL</span>
@@ -422,7 +423,6 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
 
   <p class="tr-sub reveal">Un minuto de jardinería cósmica: <b>del páramo al jardín</b>. Sin cortes, solo vida floreciendo.</p>
 
-  <!-- Modal de reproducción -->
   <div class="tr-modal" id="trModal" aria-hidden="true">
     <div class="tr-backdrop" data-tr-close></div>
     <div class="tr-dialog">
@@ -432,196 +432,103 @@ footer{border-top:1px solid var(--line);padding:36px 28px;background:rgba(4,6,14
   </div>
 </section>
 
-<!-- ---------- JS CORREGIDO ---------- -->
-<script>
-(function(){
-  /* Enlace "Tráiler" en el menú (si no existe) */
-  var navLinks=document.querySelector('.links');
-  if(navLinks && !document.querySelector('.links a[href="#trailer"]')){
-    var na=document.createElement('a');
-    na.href='#trailer';na.textContent='Tráiler';
-    navLinks.insertBefore(na,navLinks.children[2]||null);
-  }
+<!-- ============ QUIÉNES SOMOS ============ -->
+<section id="quienes-somos" class="section">
+  <span class="kicker reveal" style="display:block;text-align:center">Quiénes somos</span>
 
-  var frame=document.getElementById('trFrame');
-  var modal=document.getElementById('trModal');
-  var screenBox=document.getElementById('trScreen');
-  if(!frame||!modal||!screenBox)return;
-
-  /* Botón ▶ de respaldo cuando el navegador bloquea el autoplay */
-  function buildOverlay(vid){
-    var ov=document.createElement('div');ov.className='tr-overlay';
-    ov.innerHTML='<button class="tr-playbtn" aria-label="Reproducir"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>'+
-                 '<p>El navegador pausó el inicio automático<br><small>haz clic en ▶ para reproducir</small></p>';
-    ov.querySelector('button').addEventListener('click',function(){ov.remove();vid.play();});
-    return ov;
-  }
-
-  /* Aviso si el archivo no existe o el códec no es compatible */
-  function buildError(src){
-    var er=document.createElement('div');er.className='tr-error';
-    er.innerHTML='⚠ No se pudo cargar el video.<br><small>Ruta intentada: <b>'+src+'</b><br>'+
-                 'Verifica que el archivo esté junto a index.html (misma carpeta)<br>y que sea MP4 con códec H.264.</small>';
-    return er;
-  }
-
-  function openTrailer(){
-    var src=(frame.getAttribute('data-tr-src')||'').trim();
-    screenBox.innerHTML='';
-
-    if(/youtu\.be|youtube\.com/.test(src)){
-      /* YouTube → iframe */
-      var emb=src.indexOf('youtu.be')>-1
-        ? src.replace('youtu.be/','www.youtube.com/embed/')
-        : src.replace('watch?v=','embed/');
-      var ifr=document.createElement('iframe');
-      ifr.src=emb+(emb.indexOf('?')>-1?'&':'?')+'autoplay=1';
-      ifr.allow='autoplay; fullscreen; encrypted-media; picture-in-picture';
-      ifr.allowFullscreen=true;
-      screenBox.appendChild(ifr);
-    }else{
-      /* Video local .mp4 */
-      var vid=document.createElement('video');
-      vid.controls=true;vid.playsInline=true;vid.preload='auto';
-      var poster=frame.getAttribute('data-tr-poster');
-      if(poster)vid.poster=poster;
-      var so=document.createElement('source');
-      so.src=src;so.type='video/mp4';
-      vid.appendChild(so);
-      so.addEventListener('error',function(){vid.remove();screenBox.appendChild(buildError(src));});
-      screenBox.appendChild(vid);
-      /* Intento de autoplay con respaldo si el navegador lo bloquea */
-      var pr=vid.play();
-      if(pr&&pr.catch){pr.catch(function(){screenBox.appendChild(buildOverlay(vid));});}
-    }
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-  }
-
-  function closeTrailer(){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
-    screenBox.innerHTML=''; /* detiene el video */
-    document.body.style.overflow='';
-  }
-
-  frame.addEventListener('click',openTrailer);
-  frame.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openTrailer();}});
-  modal.addEventListener('click',function(e){if(e.target.hasAttribute('data-tr-close'))closeTrailer();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTrailer();});
-})();
-</script>
-
-<!-- ============ PLANETAS ============ -->
-<section id="planetas" class="section">
-  <span class="kicker reveal">Progresión</span>
-  <h2 class="reveal">TU VIAJE DE TRANSFORMACIÓN</h2>
-  <p class="lead reveal">Del páramo al jardín: regula el clima, siembra flora chica, mediana y grande, y estabiliza la ecología completa.</p>
-
-  <div class="planet-wrap">
-    <div class="planet-preview reveal">
-      <img class="pimg active" data-state="frio" src='img/frio.png' alt="Planeta frío">
-      <img class="pimg" data-state="caliente" src='img/caliente.png' alt="Planeta caliente">
-      <img class="pimg" data-state="estable" src='img/planeta restaurado.png' alt="Planeta estable">
-      <div class="ptag tag-red" id="pTag">CONTAMINACIÓN</div>
-      <div class="pstats">
-        <span class="chip temp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4a2 2 0 0 1 4 0v9a4.5 4.5 0 1 1-4 0z"/><path d="M12 9v7"/></svg><span id="pTemp">-12,5°</span></span>
-        <span class="chip atm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3s6 7 6 11a6 6 0 1 1-12 0c0-4 6-11 6-11z"/></svg><span id="pAtm">6,0%</span></span>
-      </div>
-      <div class="pname" id="pName">PÁRAMO FRÍO</div>
-    </div>
-
-    <div class="planet-tabs reveal">
-      <div class="ptab-row">
-        <button class="ptab active" data-state="frio">❄ FRÍO</button>
-        <button class="ptab" data-state="caliente">🔥 CALIENTE</button>
-        <button class="ptab" data-state="estable">🌿 ESTABLE</button>
-      </div>
-      <p id="pDesc">Un mundo helado y silencioso. Bajo el hielo, la vida espera su oportunidad. Enciende los calefactores geotérmicos.</p>
-      <div class="fauna-row">
-        <span class="fauna">🐰 Conejo</span><span class="fauna">🦆 Pato</span><span class="fauna">🐝 EnjambreAbejas</span><span class="fauna">🦋 Polilla</span>
-      </div>
-    </div>
+  <div class="qs-head reveal">
+    <h2 style="color: #b8d89a;">Terrabloom</h2>
+    <img class="qs-logo" src="img/Logo-SinBG.svg" alt="Logo Terrabloom Estudio" data-fb="logo">
+    <h2 style="color: #f0d9b5;">Estudio</h2>
   </div>
 
-  <div class="starmap-box reveal">
-    <div class="starmap-head">
-      <h3>✦ MAPA ESTELAR</h3>
-      <div class="legend">
-        <span><i class="dot done"></i>RESTAURADO</span>
-        <span><i class="dot cur"></i>ACTUAL</span>
-        <span><i class="dot lock"></i>BLOQUEADO</span>
-      </div>
+  <div class="qs-text reveal">
+    <p>Somos un equipo de <b>personas apasionadas</b> por los videojuegos.</p>
+    <p>Nos conocimos estudiando en la <b>Tecnicatura de Desarrollo y Producción de Videojuegos</b> en el Centro de E-Learning de la UTN.</p>
+    <p>A partir de las <b>diferentes capacidades</b> de cada integrante, nos unimos con el <b>objetivo</b> de crear <b>juegos con propósito e impacto</b>.</p>
+  </div>
+
+  <div class="team reveal">
+    <article class="member">
+      <img class="member-photo" src="img/equipo/ezequiel.jpg" alt="Ezequiel J. Lopez Farmani" loading="lazy" data-fb="avatar" data-name="Ezequiel Lopez">
+      <h3>Ezequiel J. Lopez Farmani</h3>
+      <p>Dirección, Game Design, Producción, Arte 3D, Diseño e Implementación, Desarrollo / Código</p>
+      <a class="member-li" href="https://www.linkedin.com/in/ezequiel-j-lopez-fermani/" aria-label="LinkedIn de Ezequiel J. Lopez Farmani"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    </article>
+
+    <article class="member">
+      <img class="member-photo" src="img/equipo/loana.jpg" alt="Loana Rubio" loading="lazy" data-fb="avatar" data-name="Loana Rubio">
+      <h3>Loana Rubio</h3>
+      <p>Arte 2D y 3D, Diseño e Implementación, Desarrollo / Código</p>
+      <a class="member-li" href="https://www.linkedin.com/in/loanarubio/" aria-label="LinkedIn de Loana Rubio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    </article>
+
+    <article class="member">
+      <img class="member-photo" src="img/equipo/leandro.jpg" alt="Leandro Perez" loading="lazy" data-fb="avatar" data-name="Leandro Perez">
+      <h3>Leandro Perez</h3>
+      <p>Game Design, Producción, Arte 3D, Diseño e Implementación, Diseño Narrativo</p>
+      <a class="member-li" href="#" aria-label="LinkedIn de Leandro Perez"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    </article>
+
+    <article class="member">
+      <img class="member-photo" src="img/equipo/melanie.jpg" alt="Melanie Hojman" loading="lazy" data-fb="avatar" data-name="Melanie Hojman">
+      <h3>Melanie Hojman</h3>
+      <p>Producción, Branding, Arte 2D y Diseño UI/UX, Diseño Narrativo</p>
+      <a class="member-li" href="https://www.linkedin.com/in/melanie-hojman/" aria-label="LinkedIn de Melanie Hojman"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    </article>
+
+    <article class="member">
+      <img class="member-photo" src="img/equipo/tahiel.jpg" alt="Luca Tahiel Ludi" loading="lazy" data-fb="avatar" data-name="Luca Tahiel Ludi">
+      <h3>Luca Tahiel Ludi</h3>
+      <p>Desarrollo / Código, Diseño e Implementación de Audio y Sonido, CM y PR</p>
+      <a class="member-li" href="https://www.linkedin.com/in/luca-tahiel-ludi-6b146b1b7/" aria-label="LinkedIn de Luca Tahiel Ludi"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+    </article>
+  </div>
+
+  <div class="qs-contact reveal">
+    <span class="kicker">Contacto</span>
+    <div class="qs-contact-grid">
+      <a class="contact-item" href="https://www.instagram.com/ult_jardinero/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>
+        <u>@ult_jardinero</u>
+      </a>
+      <a class="contact-item" href="mailto:terrabloom2026@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7.5l9 6 9-6"/></svg>
+        <u>terrabloom2026@gmail.com</u>
+      </a>
     </div>
-    <svg id="starmapSvg" viewBox="0 0 1000 170"></svg>
   </div>
 </section>
 
-<!-- ============ SISTEMAS ============ -->
-<section id="sistemas" class="section">
-  <span class="kicker reveal">Sistemas</span>
-  <h2 class="reveal">SISTEMAS DEL JUEGO Y RECOMPENSA</h2>
-  <div class="panels">
-    <article class="panel reveal" id="ecoPanel">
-      <h3>⚙ SISTEMA ECOLÓGICO</h3>
-      <div class="eco-grid">
-        <figure class="machine">
-          <img src="img/calentador.png" alt="Calefactor geotérmico">
-          <figcaption>CALEFACTOR GEOTÉRMICO</figcaption>
-        </figure>
-        <div>
-          <div class="mach-chips">
-            <span class="mchip on">🔥 Calefactor</span><span class="mchip">❄ Enfriador</span><span class="mchip">💧 Condensador</span><span class="mchip">🌱 Sembradora</span>
-          </div>
-          <div class="gauge">
-            <label>TEMPERATURA <b id="tempVal">-150,0°</b></label>
-            <div class="slider"><div class="bar"><span class="zone"></span><span class="marker" id="tempMark"></span></div><input type="range" id="tempRange" min="0" max="100" value="20" aria-label="Temperatura"></div>
-          </div>
-          <div class="gauge">
-            <label>ATMÓSFERA <b id="atmVal">12,0%</b></label>
-            <div class="slider"><div class="bar"><span class="zone"></span><span class="marker" id="atmMark"></span></div><input type="range" id="atmRange" min="0" max="100" value="20" aria-label="Atmósfera"></div>
-          </div>
-          <div class="green-badge" id="greenBadge">✔ ZONA VERDE (40–60)</div>
-        </div>
-      </div>
-    </article>
-
-    <article class="panel reveal">
-      <h3>👁 POV ANIMAL · RECOMPENSA ESPECTÁCULO</h3>
-      <figure class="pov">
-        <img src='img/POV.jpeg' alt="POV animal">
-        <figcaption>Disfruta de tu creación a través de los ojos de sus habitantes.</figcaption>
-      </figure>
-      <p class="pov-note"><b>Sin interfaz.</b> Solo ríos, flores y vida. Así se siente un jardín terminado.</p>
-    </article>
-  </div>
-</section>
-
-<!-- ============ DESCARGAR ============ -->
+<!-- ============ PRÓXIMAMENTE / PLATAFORMAS ============ -->
 <section id="descargar" class="section center">
-  <span class="float-fauna ff1">🐰</span><span class="float-fauna ff2">🐝</span><span class="float-fauna ff3">🦆</span><span class="float-fauna ff4">🌱</span>
-  <span class="kicker reveal">Descargar y plataformas</span>
+  <img class="float-fauna ff1" src="img/Material06.png" alt="" data-fb="emoji" data-emoji="🐰">
+  <img class="float-fauna ff2" src="img/Material10.png" alt="" data-fb="emoji" data-emoji="🐝">
+  <img class="float-fauna ff3" src="img/Material07.png" alt="" data-fb="emoji" data-emoji="🦆">
+  <img class="float-fauna ff4" src="img/Material03.png" alt="" data-fb="emoji" data-emoji="🌱">
+
+  <span class="kicker reveal">Plataformas</span>
   <h2 class="reveal">¡RESTAURA EL FUTURO!</h2>
-  <p class="lead reveal">El Último Jardinero te espera. Disponible para PC y celular. La galaxia necesita más jardines.</p>
-  <div class="stores reveal">
-    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><circle cx="14.8" cy="9.2" r="2.5" fill="currentColor"/><circle cx="8.6" cy="15.2" r="1.6" fill="currentColor"/><path d="M10 14l2.6-2.7" stroke="currentColor" stroke-width="1.8"/></svg><span><small>Descargar en</small><b>STEAM / PC</b></span></a>
-    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 12.9c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.2-.9-2.3-3.2zM14.7 6.6c.6-.7 1-1.7.8-2.6-.9 0-1.9.6-2.4 1.3-.6.7-1 1.6-.9 2.5 1 .1 2-.5 2.5-1.2z"/></svg><span><small>Descargar en</small><b>APP STORE</b></span></a>
-    <a class="store" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17c0 .8.9 1.3 1.6.9l14-8.5c.7-.4.7-1.4 0-1.8l-14-8.5c-.7-.4-1.6.1-1.6.9z"/></svg><span><small>Descargar en</small><b>GOOGLE PLAY</b></span></a>
+  <p class="lead reveal">El Último Jardinero te espera para PC y celular. La galaxia necesita más jardines.</p>
+  <span class="soon-pill reveal">PRÓXIMAMENTE</span>
+  <div class="stores reveal" aria-label="Plataformas (próximamente)">
+    <div class="store"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><circle cx="14.8" cy="9.2" r="2.5" fill="currentColor"/><circle cx="8.6" cy="15.2" r="1.6" fill="currentColor"/><path d="M10 14l2.6-2.7" stroke="currentColor" stroke-width="1.8"/></svg><span><small>Próximamente en</small><b>STEAM / PC</b></span></div>
+    <div class="store"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 12.9c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.7-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.5-2 .8-1.2 1.1-2.3 1.1-2.4 0 0-2.2-.9-2.3-3.2zM14.7 6.6c.6-.7 1-1.7.8-2.6-.9 0-1.9.6-2.4 1.3-.6.7-1 1.6-.9 2.5 1 .1 2-.5 2.5-1.2z"/></svg><span><small>Próximamente en</small><b>APP STORE</b></span></div>
+    <div class="store"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3.5v17c0 .8.9 1.3 1.6.9l14-8.5c.7-.4.7-1.4 0-1.8l-14-8.5c-.7-.4-1.6.1-1.6.9z"/></svg><span><small>Próximamente en</small><b>GOOGLE PLAY</b></span></div>
   </div>
 </section>
 
 <footer>
   <div class="foot">
     <div class="foot-left">
-      <span class="brand-hex">🌱</span>
-      <p>© 2025 ÚLTIMO JARDINERO · TERRABLOOM</p>
+      <img class="foot-logo" src="img/Logo-SinBG.svg" alt="" data-fb="logo">
+      <p>© 2026 ÚLTIMO JARDINERO · TERRABLOOM</p>
     </div>
     <div class="socials">
       <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></a>
       <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg></a>
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-      <a href="#" aria-label="Comunidad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v10H10l-4 4v-4H4z"/></svg></a>
+      <a href="https://www.instagram.com/ult_jardinero/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="mailto:terrabloom2026@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7.5l9 6 9-6"/></svg></a>
     </div>
     <div class="atp-wrap">
       <span class="atp">ATP</span>
@@ -654,12 +561,13 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
 (function(){
   var steps=Array.prototype.slice.call(document.querySelectorAll('.step'));
   var detail=document.getElementById('stepDetail');
+  if(!steps.length||!detail)return;
   var texts=[
     'Lee los indicadores de Temperatura y Atmósfera: cada planeta comienza en un extremo hostil.',
-    'Construye sobre la rejilla hexagonal: cada máquina transforma su entorno.',
-    'Lleva ambos indicadores a la Zona Verde (40–60) para desbloquear la vida.',
-    'Siembra flora chica, mediana y grande; libera conejos, patos, abejas y polillas.',
-    'Con la ecología estabilizada, el Mapa Estelar te lleva al siguiente mundo.'
+    'Recolecta minerales para poder construir nuestras maquinas de terraformación y equilibrar el planeta.',
+    'Lleva ambos indicadores a la Zona Verde (Habitable) para poder plantar la flora.',
+    'Siembra flora chica, mediana y grande para mantener el equilibrio ecológico y permitir el nacimiento de nuevos animales.',
+    'Con el planeta equilibrado, desbloquea el siguiente mundo del Mapa Estelar y continúa la aventura.'
   ];
   var idx=0,wrap=document.getElementById('steps');
   function set(i){idx=i;steps.forEach(function(s,k){s.classList.toggle('active',k===i);});detail.textContent=texts[i];}
@@ -667,182 +575,120 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
   setInterval(function(){if(!wrap.matches(':hover')){set((idx+1)%steps.length);}},3400);
 })();
 
-/* ---------- PLANETAS ---------- */
+/* ---------- TRÁILER ---------- */
 (function(){
-  var DATA={
-    frio:{name:'PÁRAMO FRÍO',tag:'CONTAMINACIÓN',cls:'tag-red',temp:'-12,5°',atm:'6,0%',desc:'Un mundo helado y silencioso. Bajo el hielo, la vida espera su oportunidad. Enciende los calefactores geotérmicos.'},
-    caliente:{name:'PÁRAMO CALIENTE',tag:'SOBRECALENTAMIENTO',cls:'tag-orange',temp:'55,5°',atm:'10,0%',desc:'Gases concentrados calientan el planeta. Regula el clima y enfría lo suficiente antes de sembrar.'},
-    estable:{name:'PLANETA ESTABLE',tag:'VIDA ESTABILIZADA',cls:'tag-green',temp:'15,5°',atm:'24,0%',desc:'Ríos, flora y fauna en equilibrio. El jardín está completo… es hora de partir al siguiente mundo.'}
-  };
-  var tabs=document.querySelectorAll('.ptab'),imgs=document.querySelectorAll('.pimg');
-  function setState(k){
-    var d=DATA[k];
-    imgs.forEach(function(im){im.classList.toggle('active',im.dataset.state===k);});
-    tabs.forEach(function(tb){tb.classList.toggle('active',tb.dataset.state===k);});
-    var tag=document.getElementById('pTag');
-    tag.textContent=d.tag;tag.className='ptag '+d.cls;
-    document.getElementById('pTemp').textContent=d.temp;
-    document.getElementById('pAtm').textContent=d.atm;
-    document.getElementById('pName').textContent=d.name;
-    document.getElementById('pDesc').textContent=d.desc;
+  var frame=document.getElementById('trFrame');
+  var modal=document.getElementById('trModal');
+  var screenBox=document.getElementById('trScreen');
+  if(!frame||!modal||!screenBox)return;
+
+  function buildOverlay(vid){
+    var ov=document.createElement('div');ov.className='tr-overlay';
+    ov.innerHTML='<button class="tr-playbtn" aria-label="Reproducir"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>'+
+                 '<p>El navegador pausó el inicio automático<br><small>haz clic en ▶ para reproducir</small></p>';
+    ov.querySelector('button').addEventListener('click',function(){ov.remove();vid.play();});
+    return ov;
   }
-  tabs.forEach(function(tb){tb.addEventListener('click',function(){setState(tb.dataset.state);});});
-})();
-
-/* ---------- ZONA VERDE ---------- */
-/* ---------- ZONA VERDE ---------- */
-(function(){
-  var tR=document.getElementById('tempRange'),aR=document.getElementById('atmRange');
-  var tM=document.getElementById('tempMark'),aM=document.getElementById('atmMark');
-  var tV=document.getElementById('tempVal'),aV=document.getElementById('atmVal');
-  var panel=document.getElementById('ecoPanel'),badge=document.getElementById('greenBadge');
-
-  // Mapeo de Temperatura: Extremos de -150 a 150, centro habitable de 10°C a 30°C
-  function fmtT(v) {
-    var temp;
-    if (v < 40) {
-      // Si el slider está entre 0 y 39, la temperatura va de -150° a 9°
-      temp = -150 + (v * 4); 
-    } else if (v > 60) {
-      // Si el slider está entre 61 y 100, la temperatura va de 33° a 150°
-      temp = 30 + ((v - 60) * 3); 
-    } else {
-      // ZONA VERDE: Si el slider está entre 40 y 60, la temperatura va de 10° a 30°
-      temp = 10 + (v - 40); 
+  function buildError(src){
+    var er=document.createElement('div');er.className='tr-error';
+    er.innerHTML='⚠ No se pudo cargar el video.<br><small>Ruta intentada: <b>'+src+'</b><br>'+
+                 'Verifica que el archivo esté junto a index.html (misma carpeta)<br>y que sea MP4 con códec H.264.</small>';
+    return er;
+  }
+  function openTrailer(){
+    var src=(frame.getAttribute('data-tr-src')||'').trim();
+    screenBox.innerHTML='';
+    if(/youtu\.be|youtube\.com/.test(src)){
+      var emb=src.indexOf('youtu.be')>-1
+        ? src.replace('youtu.be/','www.youtube.com/embed/')
+        : src.replace('watch?v=','embed/');
+      var ifr=document.createElement('iframe');
+      ifr.src=emb+(emb.indexOf('?')>-1?'&':'?')+'autoplay=1';
+      ifr.allow='autoplay; fullscreen; encrypted-media; picture-in-picture';
+      ifr.allowFullscreen=true;
+      screenBox.appendChild(ifr);
+    }else{
+      var vid=document.createElement('video');
+      vid.controls=true;vid.playsInline=true;vid.preload='auto';
+      var poster=frame.getAttribute('data-tr-poster');
+      if(poster)vid.poster=poster;
+      var so=document.createElement('source');
+      so.src=src;so.type='video/mp4';
+      vid.appendChild(so);
+      so.addEventListener('error',function(){vid.remove();screenBox.appendChild(buildError(src));});
+      screenBox.appendChild(vid);
+      var pr=vid.play();
+      if(pr&&pr.catch){pr.catch(function(){screenBox.appendChild(buildOverlay(vid));});}
     }
-    return temp.toFixed(1).replace('.', ',') + '°C';
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
   }
-
-  // Mapeo de Atmósfera: Directo de 0 a 100%. El centro (40-60) es la zona habitable.
-  function fmtA(v) {
-    return parseInt(v, 10) + '%';
+  function closeTrailer(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    screenBox.innerHTML='';
+    document.body.style.overflow='';
   }
-
-  function update(){
-    var tv=parseInt(tR.value,10),av=parseInt(aR.value,10);
-    tM.style.left=tv+'%';aM.style.left=av+'%';
-    tV.textContent=fmtT(tv);aV.textContent=fmtA(av);
-    
-    // La condición interna se mantiene intacta evaluando el rango de 40 a 60
-    var ok=tv>=40&&tv<=60&&av>=40&&av<=60;
-    panel.classList.toggle('green',ok);
-    badge.classList.toggle('show',ok);
-  }
-  
-  tR.addEventListener('input',update);aR.addEventListener('input',update);update();
+  frame.addEventListener('click',openTrailer);
+  frame.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openTrailer();}});
+  modal.addEventListener('click',function(e){if(e.target.hasAttribute('data-tr-close'))closeTrailer();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTrailer();});
 })();
-/* ---------- MAPA ESTELAR ---------- */
+
+/* ---------- IMÁGENES CON RESPALDO AUTOMÁTICO ----------
+   Si la ruta de tu imagen no existe, se muestra un respaldo
+   (logo SVG, iniciales o emoji) sin romper el diseño. */
 (function(){
-  var svg=document.getElementById('starmapSvg');
-  var NS='http://www.w3.org/2000/svg';
-  var nodes=[
-    {n:'AETHEL',x:80,y:95,st:2},{n:'LUMIS',x:250,y:50,st:2},{n:'ORIZON',x:420,y:105,st:2},
-    {n:'IGNIS MINOR',x:590,y:50,st:1},{n:'ZUNARI',x:760,y:100,st:0},{n:'BALTHOS',x:930,y:45,st:0}
-  ];
-  var d='M '+nodes[0].x+' '+nodes[0].y;
-  for(var i=1;i<nodes.length;i++){var a=nodes[i-1],b=nodes[i];d+=' C '+(a.x+70)+' '+a.y+' '+(b.x-70)+' '+b.y+' '+b.x+' '+b.y;}
-  var path=document.createElementNS(NS,'path');
-  path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.22)');
-  path.setAttribute('stroke-width','2');path.setAttribute('stroke-dasharray','5 9');
-  svg.appendChild(path);
-  function hexPts(cx,cy,r){var pts=[];for(var k=0;k<6;k++){var ang=Math.PI/180*(60*k-30);pts.push((cx+r*Math.cos(ang)).toFixed(1)+','+(cy+r*Math.sin(ang)).toFixed(1));}return pts.join(' ');}
-  nodes.forEach(function(nd){
-    var poly=document.createElementNS(NS,'polygon');
-    poly.setAttribute('points',hexPts(nd.x,nd.y,22));
-    if(nd.st===2){poly.setAttribute('fill','#22c55e');poly.setAttribute('stroke','#86efac');}
-    else if(nd.st===1){poly.setAttribute('fill','#4cc9f0');poly.setAttribute('stroke','#bdeaff');poly.setAttribute('class','pulse');}
-    else{poly.setAttribute('fill','#1b2337');poly.setAttribute('stroke','#33405f');}
-    poly.setAttribute('stroke-width','2');
-    svg.appendChild(poly);
-    var ic=document.createElementNS(NS,'text');
-    ic.setAttribute('x',nd.x);ic.setAttribute('y',nd.y+5);ic.setAttribute('text-anchor','middle');
-    ic.setAttribute('style','font-size:14px;fill:'+(nd.st===0?'#55628a':'#041018')+';font-weight:700');
-    ic.textContent=nd.st===2?'✔':(nd.st===1?'✦':'');
-    svg.appendChild(ic);
-    var lb=document.createElementNS(NS,'text');
-    lb.setAttribute('x',nd.x);lb.setAttribute('y',nd.y+46);lb.setAttribute('text-anchor','middle');
-    lb.textContent=nd.n;
-    svg.appendChild(lb);
+  function logoSVG(){
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'+
+      '<circle cx="32" cy="34" r="26" fill="none" stroke="#f2e5a9" stroke-width="3"/>'+
+      '<path d="M14 44a26 26 0 0 0 36 0v4a26 26 0 0 1-36 0z" fill="#e8d790"/>'+
+      '<path d="M33 38c0-11 7-17 15-17 0 11-7 17-15 17z" fill="#5ef08e"/>'+
+      '<path d="M33 38c0-11-7-17-15-17 0 11 7 17 15 17z" fill="#3ecf6f"/>'+
+      '<path d="M33 38c5-3 9-7 11-13" stroke="#f2e5a9" stroke-width="2" fill="none"/>'+
+      '<circle cx="24" cy="46" r="2.4" fill="#8a6d3b"/><circle cx="31" cy="50" r="1.6" fill="#8a6d3b"/></svg>';
+  }
+  function avatarSVG(t){
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">'+
+      '<defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#123047"/><stop offset="1" stop-color="#0b1a26"/></linearGradient></defs>'+
+      '<rect width="96" height="96" fill="url(#g)"/>'+
+      '<text x="48" y="60" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#2EB7CF" text-anchor="middle">'+t+'</text></svg>';
+  }
+  function initials(name){
+    return (name||'?').trim().split(/\s+/).map(function(p){return p.charAt(0);}).slice(0,2).join('').toUpperCase();
+  }
+  document.querySelectorAll('img[data-fb]').forEach(function(im){
+    function fail(){
+      im.removeEventListener('error',fail);
+      var type=im.getAttribute('data-fb');
+      if(type==='logo'){
+        im.src='data:image/svg+xml;utf8,'+encodeURIComponent(logoSVG());
+      }else if(type==='avatar'){
+        im.src='data:image/svg+xml;utf8,'+encodeURIComponent(avatarSVG(initials(im.getAttribute('data-name'))));
+      }else if(type==='emoji'){
+        var sp=document.createElement('span');
+        sp.className=im.className;
+        sp.textContent=im.getAttribute('data-emoji')||'🌱';
+        im.replaceWith(sp);
+      }
+    }
+    im.addEventListener('error',fail);
+    if(im.complete&&im.naturalWidth===0){fail();}
   });
 })();
-</script>
-<!-- ══════════════════════════════════════════════════════════════════
-     PARCHE MOBILE — MENÚ HAMBURGUESA + TAGS SIN SUPERPOSICIÓN
-     👉 Pega este bloque COMPLETO al FINAL de tu <body>
-        (después de todos los demás scripts), así detecta el enlace
-        "Tráiler" que se inyecta solo al menú de links.
-     ✔ No reemplaza nada de tu código: solo se suma encima.
-═══════════════════════════════════════════════════════════════════ -->
 
-<style>
-/* ---------- BOTÓN HAMBURGUESA (solo mobile) ---------- */
-.nav{z-index:60}
-.nav-burger{
-  display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  width:42px;height:40px;border-radius:12px;border:1px solid var(--line);
-  background:rgba(255,255,255,.06);cursor:pointer;transition:border-color .3s,background .3s;
-}
-.nav-burger span{display:block;width:20px;height:2px;border-radius:2px;background:var(--green);transition:transform .3s,opacity .3s}
-.nav-burger:hover{border-color:rgba(94,240,142,.5);background:rgba(94,240,142,.1)}
-.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-burger.open span:nth-child(2){opacity:0}
-.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-@media (max-width:960px){.nav-burger{display:flex}}
-
-/* ---------- MENÚ MOBILE A PANTALLA COMPLETA ---------- */
-.mobile-menu{
-  position:fixed;inset:0;z-index:55;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:6px;
-  background:rgba(6,6,15,.94);backdrop-filter:blur(18px);
-  opacity:0;pointer-events:none;transition:opacity .35s;
-}
-.mobile-menu.open{opacity:1;pointer-events:auto}
-.mobile-menu a{
-  font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--text);padding:13px 26px;border-radius:14px;
-  opacity:0;transform:translateY(14px);transition:opacity .4s,transform .4s,color .25s,background .25s;
-}
-.mobile-menu.open a{opacity:1;transform:none}
-.mobile-menu a:hover{color:var(--green);background:rgba(94,240,142,.08)}
-.mobile-menu a:nth-child(1){transition-delay:.05s}
-.mobile-menu a:nth-child(2){transition-delay:.10s}
-.mobile-menu a:nth-child(3){transition-delay:.15s}
-.mobile-menu a:nth-child(4){transition-delay:.20s}
-.mobile-menu a:nth-child(5){transition-delay:.25s}
-.mobile-menu a:nth-child(6){transition-delay:.30s}
-.mobile-menu a:nth-child(7){transition-delay:.35s}
-.mobile-menu .mm-cta{
-  margin-top:16px;font-size:14px;color:#041018;letter-spacing:.18em;
-  background:linear-gradient(135deg,var(--green),var(--blue));
-  padding:14px 34px;border-radius:999px;box-shadow:0 10px 40px rgba(94,240,142,.35);
-}
-
-/* ---------- TAGS DEL PLANETA SIN SUPERPONERSE EN MOBILE ---------- */
-@media (max-width:700px){
-  .pstats{top:12px;right:12px;left:auto;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:72%}
-  .chip{padding:6px 10px;font-size:12px;border-radius:10px}
-  .chip svg{width:12px;height:12px}
-  /* el tag (CONTAMINACIÓN / SOBRECALENTAMIENTO / VIDA ESTABILIZADA)
-     baja sobre el nombre del planeta: ya no choca con los chips */
-  .ptag{top:auto;bottom:62px;left:14px;font-size:10px;letter-spacing:.16em;padding:6px 12px}
-  .pname{bottom:14px;left:14px;font-size:17px}
-  .planet-preview{min-height:300px}
-}
-</style>
-
-<script>
+/* ---------- MENÚ HAMBURGUESA MOBILE ---------- */
 (function(){
   var nav=document.getElementById('nav')||document.querySelector('.nav');
   if(!nav||document.getElementById('navBurger'))return;
 
-  /* --- crea el botón hamburguesa dentro del nav --- */
   var burger=document.createElement('button');
   burger.id='navBurger';burger.className='nav-burger';
   burger.setAttribute('aria-label','Abrir menú de navegación');
   burger.innerHTML='<span></span><span></span><span></span>';
   nav.appendChild(burger);
 
-  /* --- crea el menú clonando los links existentes (incluye Tráiler) --- */
   var menu=document.createElement('div');
   menu.className='mobile-menu';menu.id='mobileMenu';
   var links=document.querySelector('.links');
@@ -852,7 +698,7 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
     });
   }
   var cta=document.createElement('a');
-  cta.href='#descargar';cta.textContent='Descargar';cta.className='mm-cta';
+  cta.href='#descargar';cta.textContent='Próximamente';cta.className='mm-cta';
   menu.appendChild(cta);
   document.body.appendChild(menu);
 
@@ -870,12 +716,10 @@ window.addEventListener('scroll',function(){document.getElementById('nav').class
   }
 
   burger.addEventListener('click',toggleMenu);
-  /* al tocar cualquier link, navega y cierra */
   menu.addEventListener('click',function(e){if(e.target.closest('a'))closeMenu();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
   window.addEventListener('resize',function(){if(window.innerWidth>960)closeMenu();});
 })();
 </script>
-
 </body>
 </html>
